@@ -1,3 +1,5 @@
+import os
+import sqlite3
 import unittest
 import tempfile
 import app
@@ -8,14 +10,16 @@ class WhoKnowsTestCase(unittest.TestCase):
     def setUp(self):
         """Before each test, set up a blank database."""
         self.db = tempfile.NamedTemporaryFile(delete=False)
+        self.db.close()
+        app.app.config['TESTING'] = True
         self.app = app.app.test_client()
-        app.DATABASE = self.db.name
+        app.DATABASE_PATH = self.db.name
         app.init_db()
 
     def tearDown(self):
         """Clean up after each test. Delete the database file."""
-        self.db.close()
-        self.db.unlink(self.db.name)
+        if os.path.exists(self.db.name):
+            os.unlink(self.db.name)
 
     # helper functions
 
@@ -77,7 +81,23 @@ class WhoKnowsTestCase(unittest.TestCase):
 
     def test_search(self):
         """Make sure the search works."""
-        pass
+        with sqlite3.connect(app.DATABASE_PATH) as db:
+            db.execute(
+                """INSERT INTO pages
+                   (title, url, language, last_updated, content)
+                   VALUES (?, ?, ?, ?, ?)""",
+                ('DevOps Guide', 'https://example.com/devops', 'en', None,
+                 'Learn DevOps with this guide.'),
+            )
+
+        response = self.app.get('/?q=DevOps&language=en')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'DevOps Guide', response.data)
+
+        response = self.app.get('/api/search?q=DevOps&language=en')
+        self.assertEqual(response.status_code, 200)
+        results = response.get_json()['search_results']
+        self.assertEqual(results[0]['title'], 'DevOps Guide')
 
 
 if __name__ == '__main__':
