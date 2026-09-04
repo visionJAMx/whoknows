@@ -1,27 +1,28 @@
 # ¿Who Knows? - Flask application
 
-A search engine from 2009 built with the latest technology! Python 2.7 and Flask 0.5. 
+A search engine from 2009, upgraded to run with Python 3 and Flask 3.
 
 **Note**: This application is intentionally full of problems and vulnerabilities. Do not run it in a production environment. 
 
 ## Installation
 
-The dependencies can be installed like this:
+Create and activate a virtual environment:
 
 ```bash
-pip install -r requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-But the dependencies are old versions from 2009. An upgrade is recommended:
+Install the dependencies:
 
 ```bash
-pip install -r requirements.txt --upgrade
+python3 -m pip install -r backend/requirements.txt
 ```
 
 To initialize a new database:
 
 ```bash
-$ make init
+make init
 ```
 
 Note: Windows does not natively support Make. 
@@ -32,12 +33,12 @@ Note: Windows does not natively support Make.
 Start a development server on port `8080`:
 
 ```bash
-$ make run
+make run
 ```
 Or:
 
 ```bash
-$ python2 app.py
+python3 backend/app.py
 ```
 
 ## Test the application
@@ -45,11 +46,11 @@ $ python2 app.py
 To run the tests:
 
 ```bash
-$ make test
+make test
 ```
 
 Or:
 
 ```bash
-$ python2 ./app_tests.py
+PYTHONPATH=backend python3 backend/app_tests.py
 ```

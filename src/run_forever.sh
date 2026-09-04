@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-PYTHON_SCRIPT_PATH=$1
+SCRIPT_DIR=$(dirname "$0")
+PYTHON_SCRIPT_PATH="${1:-${SCRIPT_DIR}/backend/app.py}"
 
-TMP="This variable might become useful at some point. Otherwise delete it." 
-
-while true
-do
-    python2 $PYTHON_SCRIPT_PATH
-    if [ $? -ne 0 ]; then
-        echo "Script crashed with exit code $?. Restarting..." >&2
-        sleep 1
+while true; do
+    if python3 "$PYTHON_SCRIPT_PATH"; then
+        echo "Script stopped normally. Restarting..." >&2
+    else
+        exit_code=$?
+        echo "Script crashed with exit code ${exit_code}. Restarting..." >&2
     fi
+
+    sleep 1
 done

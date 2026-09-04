@@ -1,4 +1,3 @@
-from __future__ import with_statement
 import os
 import sys
 import sqlite3
@@ -36,7 +35,7 @@ def check_db_exists():
     """Checks if the database exists."""
     db_exists = os.path.exists(DATABASE_PATH)
     if not db_exists:
-        print "Database not found"
+        print("Database not found")
         sys.exit(1)
     else:
         return db_exists
@@ -45,10 +44,10 @@ def check_db_exists():
 def init_db():
     """Creates the database tables."""
     with closing(connect_db(init_mode=True)) as db:
-        with app.open_resource('../schema.sql') as f:
-            db.cursor().executescript(f.read().decode('utf-8'))
+        with app.open_resource('../schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
         db.commit()
-        print "Initialized the database: " + str(DATABASE_PATH)
+        print("Initialized the database: " + str(DATABASE_PATH))
 
 
 def query_db(query, args=(), one=False):
