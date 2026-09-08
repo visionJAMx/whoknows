@@ -17,12 +17,12 @@ reviews:
       - "dev"
 
   path_instructions:
-    - path: "src/backend/**/*.go"
+    - path: "src/**/*.go"
       instructions: |
         Kontrollér Go-fejlhåndtering, context-brug, ressourceoprydning,
         sikkerhed, tests og idiomatisk Go.
 
-    - path: "src/backend/internal/database/**"
+    - path: "src/internal/database/**"
       instructions: |
         Kontrollér at SQL er parameteriseret, at passwords aldrig gemmes
         som klartekst, og at databasefejl håndteres sikkert.
