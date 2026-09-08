@@ -1,24 +1,17 @@
-package database
+package repository
 
 import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
-)
 
-type Page struct {
-	Title       string
-	URL         string
-	Language    string
-	LastUpdated time.Time
-	Content     string
-}
+	"github.com/visionJAMx/whoknows/src/domain"
+)
 
 func CreatePage(
 	ctx context.Context,
 	db *sql.DB,
-	page Page,
+	page domain.Page,
 ) error {
 	_, err := db.ExecContext(
 		ctx,
@@ -42,7 +35,7 @@ func SearchPages(
 	db *sql.DB,
 	query string,
 	language string,
-) ([]Page, error) {
+) ([]domain.Page, error) {
 	searchTerm := "%" + query + "%"
 
 	rows, err := db.QueryContext(
@@ -62,10 +55,10 @@ func SearchPages(
 	}
 	defer rows.Close()
 
-	var pages []Page
+	var pages []domain.Page
 
 	for rows.Next() {
-		var page Page
+		var page domain.Page
 
 		if err := rows.Scan(
 			&page.Title,

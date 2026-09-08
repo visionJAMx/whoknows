@@ -1,4 +1,4 @@
-module github.com/visionJAMx/whoknows/src/backend
+module github.com/visionJAMx/whoknows/src
 
 go 1.27.1
 

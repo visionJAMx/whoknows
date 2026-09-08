@@ -1,17 +1,12 @@
-package database
+package repository
 
 import (
 	"context"
 	"database/sql"
 	"fmt"
-)
 
-type User struct {
-	ID           int64
-	Username     string
-	Email        string
-	PasswordHash string
-}
+	"github.com/visionJAMx/whoknows/src/domain"
+)
 
 func CreateUser(
 	ctx context.Context,
@@ -44,8 +39,8 @@ func FindUserByUsername(
 	ctx context.Context,
 	db *sql.DB,
 	username string,
-) (User, error) {
-	var user User
+) (domain.User, error) {
+	var user domain.User
 
 	err := db.QueryRowContext(
 		ctx,
@@ -60,7 +55,7 @@ func FindUserByUsername(
 		&user.PasswordHash,
 	)
 	if err != nil {
-		return User{}, fmt.Errorf("find user by username: %w", err)
+		return domain.User{}, fmt.Errorf("find user by username: %w", err)
 	}
 
 	return user, nil
