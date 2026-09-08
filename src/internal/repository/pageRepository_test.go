@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/visionJAMx/whoknows/src/domain"
 )
 
 func TestCreateAndSearchPages(t *testing.T) {
@@ -22,7 +24,7 @@ func TestCreateAndSearchPages(t *testing.T) {
 		t.Fatalf("Initialize() returned an error: %v", err)
 	}
 
-	pages := []Page{
+	pages := []domain.Page{
 		{
 			Title:       "Go programming",
 			URL:         "https://example.com/go",
