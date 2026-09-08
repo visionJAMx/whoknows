@@ -1,4 +1,4 @@
-package database
+package repository
 
 import (
 	"context"
@@ -15,28 +15,28 @@ import (
 //go:embed schema.sql
 var schema string
 
-// Open opretter forbindelse til en SQLite-database.
+// Open opretter forbindelse til en SQLite-repository.
 func Open(path string) (*sql.DB, error) {
 	if strings.TrimSpace(path) == "" {
-		return nil, fmt.Errorf("database path must not be empty")
+		return nil, fmt.Errorf("repository path must not be empty")
 	}
 
 	if path != ":memory:" && !strings.HasPrefix(path, "file:") {
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, fmt.Errorf("create database directory: %w", err)
+			return nil, fmt.Errorf("create repository directory: %w", err)
 		}
 	}
 
 	db, err := sql.Open("sqlite", path)
 	if err != nil {
-		return nil, fmt.Errorf("open database: %w", err)
+		return nil, fmt.Errorf("open repository: %w", err)
 	}
 
 	db.SetMaxOpenConns(1)
 
 	if err := db.Ping(); err != nil {
 		db.Close()
-		return nil, fmt.Errorf("connect to database: %w", err)
+		return nil, fmt.Errorf("connect to repository: %w", err)
 	}
 
 	if _, err := db.Exec("PRAGMA foreign_keys = ON"); err != nil {
@@ -50,7 +50,7 @@ func Open(path string) (*sql.DB, error) {
 // Initialize opretter tabellerne fra schema.sql.
 func Initialize(ctx context.Context, db *sql.DB) error {
 	if _, err := db.ExecContext(ctx, schema); err != nil {
-		return fmt.Errorf("initialize database schema: %w", err)
+		return fmt.Errorf("initialize repository schema: %w", err)
 	}
 
 	return nil

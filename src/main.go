@@ -7,26 +7,28 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/visionJAMx/whoknows/src/backend/internal/database"
+	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
 func main() {
 	databasePath := os.Getenv("DATABASE_PATH")
 	if databasePath == "" {
-		databasePath = "data/whoknows.db"
+		databasePath = "../data/whoknows.db"
 	}
 
-	db, err := database.Open(databasePath)
+	db, err := repository.Open(databasePath)
 	if err != nil {
-		log.Fatalf("could not connect to database: %v", err)
+		log.Fatalf("could not connect to repository: %v", err)
 	}
 	defer db.Close()
 
-	if err := database.Initialize(context.Background(), db); err != nil {
-		log.Fatalf("could not initialize database: %v", err)
+	if err := repository.Initialize(context.Background(), db); err != nil {
+		log.Fatalf("could not initialize repository: %v", err)
 	}
 
 	router := gin.Default()
+
+	//Routes
 
 	router.GET("/health", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
