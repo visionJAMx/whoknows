@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/visionJAMx/whoknows/src/internal/delivery"
 	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
@@ -28,7 +29,10 @@ func main() {
 
 	router := gin.Default()
 
+	router.LoadHTMLGlob("templates/*.html")
+
 	//Routes
+	router.GET("/login", delivery.LoginPage)
 
 	router.GET("/health", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
