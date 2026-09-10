@@ -7,5 +7,10 @@ import (
 )
 
 func SearchPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "search.html", gin.H{})
+	q := c.Query("q")
+
+	c.HTML(http.StatusOK, "search.html", gin.H{
+		"error": "",
+		"query": q,
+	})
 }
