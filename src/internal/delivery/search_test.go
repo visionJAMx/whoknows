@@ -35,4 +35,31 @@ func TestSearchPageReturnsHTML(t *testing.T) {
 			response.Body.String(),
 		)
 	}
+
+}
+
+func TestSearchPageShowsQuery(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+
+	router := gin.New()
+	router.LoadHTMLGlob("../../templates/*.html")
+	router.GET("/", SearchPage)
+
+	request := httptest.NewRequest(
+		http.MethodGet,
+		"/?q=golang",
+		nil,
+	)
+
+	response := httptest.NewRecorder()
+
+	router.ServeHTTP(response, request)
+
+	if !strings.Contains(response.Body.String(), "golang") {
+		t.Errorf(
+			"expected response to contain query, got %s",
+			response.Body.String(),
+		)
+	}
+
 }
