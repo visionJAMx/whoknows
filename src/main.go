@@ -54,6 +54,8 @@ func main() {
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
 
+	router.GET("/", delivery.SearchPage)
+
 	router.GET("/health", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"status": "ok",
