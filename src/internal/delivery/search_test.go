@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TestSearchPageRetunrsHTML(t *testing.T) {
+func TestSearchPageReturnsHTML(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	router := gin.New()
