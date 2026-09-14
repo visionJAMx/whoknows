@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 	"github.com/visionJAMx/whoknows/src/internal/delivery"
 	"github.com/visionJAMx/whoknows/src/internal/repository"
@@ -29,7 +30,7 @@ func main() {
 
 	router := gin.Default()
 
-	router.LoadHTMLGlob("templates/*.html")
+	router.HTMLRender = createRenderer()
 
 	//Routes
 	router.GET("/login", delivery.LoginPage)
@@ -45,4 +46,11 @@ func main() {
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
 	}
+}
+
+func createRenderer() multitemplate.Renderer {
+	r := multitemplate.NewRenderer()
+	r.AddFromFiles("login", "templates/layout.html", "templates/login.html")
+	r.AddFromFiles("search", "templates/layout.html", "templates/search.html")
+	return r
 }
