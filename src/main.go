@@ -29,8 +29,8 @@ func main() {
 	}
 
 	router := gin.Default()
-
 	router.HTMLRender = createRenderer()
+	router.Static("/static", "./static")
 
 	//Routes
 	router.GET("/login", delivery.LoginPage)
