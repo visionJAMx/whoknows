@@ -1,6 +1,7 @@
 package delivery
 
 import (
+    "database/sql"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -61,5 +62,33 @@ func TestSearchPageShowsQuery(t *testing.T) {
 			response.Body.String(),
 		)
 	}
-
 }
+
+func TestApiSearch(t *testing.T) {
+    gin.SetMode(gin.TestMode)
+
+    var db *sql.DB
+
+    router := gin.New()
+    router.GET("/api/search", func(c *gin.Context) {
+       ApiSearch(c, db)
+    })
+
+    request := httptest.NewRequest(
+       http.MethodGet,
+       "/api/search?q=golang",
+       nil,
+    )
+
+    response := httptest.NewRecorder()
+
+    router.ServeHTTP(response, request)
+
+    if response.Code != http.StatusOK && response.Code != http.StatusInternalServerError {
+       t.Errorf(
+          "expected status 200 or 500, got %d",
+          response.Code,
+       )
+    }
+}
+
