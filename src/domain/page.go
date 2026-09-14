@@ -3,9 +3,9 @@ package domain
 import "time"
 
 type Page struct {
-	Title       string
-	URL         string
-	Language    string
-	LastUpdated time.Time
-	Content     string
+	Title       string    `json:"title"`
+	URL         string    `json:"url"`
+	Language    string    `json:"language"`
+	LastUpdated time.Time `json:"last_updated"`
+	Content     string    `json:"content"`
 }

@@ -15,10 +15,10 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 		language := c.DefaultQuery("language", "en")
 
 		data := gin.H{
-			"query":    q,
-			"language": language,
-			"results":  []any{},
-			"error":    "",
+			"query":          q,
+			"language":       language,
+			"search_results": []any{},
+			"error":          "",
 		}
 
 		if q == "" {
@@ -39,7 +39,7 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
-		data["results"] = pages
+		data["search_results"] = pages
 		c.HTML(http.StatusOK, "search.html", data)
 	}
 }
@@ -51,9 +51,9 @@ func SearchAPI(db *sql.DB) gin.HandlerFunc {
 
 		if q == "" {
 			c.JSON(http.StatusOK, gin.H{
-				"query":    q,
-				"language": language,
-				"results":  []any{},
+				"query":          q,
+				"language":       language,
+				"search_results": []any{},
 			})
 			return
 		}
@@ -73,9 +73,9 @@ func SearchAPI(db *sql.DB) gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"query":    q,
-			"language": language,
-			"results":  pages,
+			"query":          q,
+			"language":       language,
+			"search_results": pages,
 		})
 	}
 }
