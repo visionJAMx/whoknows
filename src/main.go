@@ -34,6 +34,7 @@ func main() {
 
 	//Routes
 	router.GET("/login", delivery.LoginPage)
+	router.GET("/register", delivery.RegisterPage)
 
 	router.GET("/", delivery.SearchPage)
 
@@ -52,5 +53,6 @@ func createRenderer() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("login", "templates/layout.html", "templates/login.html")
 	r.AddFromFiles("search", "templates/layout.html", "templates/search.html")
+	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
 	return r
 }
