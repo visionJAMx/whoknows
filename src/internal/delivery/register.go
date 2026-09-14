@@ -36,9 +36,9 @@ func Register(c *gin.Context, db *sql.DB) {
 		return
 	}
 
-	if len(password) < 12 {
+	if len(password) < 10 {
 		c.HTML(http.StatusBadRequest, "register.html", gin.H{
-			"error": "Password must be at least 12 characters",
+			"error": "Password must be at least 10 characters",
 		})
 		return
 	}

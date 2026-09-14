@@ -1,6 +1,7 @@
 package delivery
 
 import (
+    "database/sql"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -40,4 +41,46 @@ func TestRegisterPageReturnsHTML(t *testing.T) {
 			response.Body.String(),
 		)
 	}
+}
+func TestRegister(t *testing.T) {
+    gin.SetMode(gin.TestMode)
+
+    var db *sql.DB
+
+    router := gin.New()
+
+    router.POST("/api/register", func(c *gin.Context) {
+       Register(c, db)
+    })
+
+    body := strings.NewReader(
+       "username=testuser&email=test@example.com&password=secret123",
+    )
+
+    request := httptest.NewRequest(
+       http.MethodPost,
+       "/api/register",
+       body,
+    )
+
+    request.Header.Set(
+       "Content-Type",
+       "application/x-www-form-urlencoded",
+    )
+
+    response := httptest.NewRecorder()
+
+    router.ServeHTTP(response, request)
+
+    if response.Code != http.StatusSeeOther {
+       t.Errorf(
+          "expected status %d, got %d",
+          http.StatusSeeOther,
+          response.Code,
+       )
+    }
+
+    if location := response.Header().Get("Location"); location != "/login" {
+       t.Errorf("expected redirect to /login, got %s", location)
+    }
 }
