@@ -34,7 +34,7 @@ func main() {
 	//Routes
 	router.GET("/login", delivery.LoginPage)
 
-	router.GET("/", delivery.SearchPage)
+	router.GET("/", delivery.SearchPage(db))
 
 	router.GET("/health", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
