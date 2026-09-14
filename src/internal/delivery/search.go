@@ -43,3 +43,39 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 		c.HTML(http.StatusOK, "search.html", data)
 	}
 }
+
+func SearchAPI(db *sql.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		q := c.Query("q")
+		language := c.DefaultQuery("language", "en")
+
+		if q == "" {
+			c.JSON(http.StatusOK, gin.H{
+				"query":    q,
+				"language": language,
+				"results":  []any{},
+			})
+			return
+		}
+
+		pages, err := repository.SearchPages(
+			c.Request.Context(),
+			db,
+			q,
+			language,
+		)
+		if err != nil {
+			log.Printf("api search: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Could not search pages",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"query":    q,
+			"language": language,
+			"results":  pages,
+		})
+	}
+}
