@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dotenv-org/godotenvvault"
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -14,6 +16,12 @@ import (
 )
 
 func main() {
+
+	err := godotenvvault.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	databasePath := os.Getenv("DATABASE_PATH")
 	if databasePath == "" {
 		databasePath = "../data/whoknows.db"
@@ -29,8 +37,6 @@ func main() {
 		log.Fatalf("could not initialize repository: %v", err)
 	}
 
-	router := gin.Default()
-
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if len(sessionSecret) < 32 {
 		log.Fatal("SESSION_SECRET must contain at least 32 characters")
@@ -45,18 +51,20 @@ func main() {
 		SameSite: http.SameSiteLaxMode,
 	})
 
+	router := gin.Default()
+	router.HTMLRender = createRenderer()
+	router.Static("/static", "./static")
+
 	router.Use(sessions.Sessions("whoknows_session", store))
-	router.LoadHTMLGlob("templates/*.html")
 
 	// Routes
 	router.GET("/login", delivery.LoginPage)
+	router.GET("/register", delivery.RegisterPage)
+	router.GET("/about", delivery.AboutPage)
 
 	router.GET("/", delivery.SearchPage(db))
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
-
-	//vi har den samme og den router.GET("/", delivery.SearchPage(db))findes længere oppe
-	//router.GET("/", delivery.SearchPage)
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 
@@ -69,4 +77,13 @@ func main() {
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
 	}
+}
+
+func createRenderer() multitemplate.Renderer {
+	r := multitemplate.NewRenderer()
+	r.AddFromFiles("login", "templates/layout.html", "templates/login.html")
+	r.AddFromFiles("search", "templates/layout.html", "templates/search.html")
+	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
+	r.AddFromFiles("about", "templates/layout.html", "templates/about.html")
+	return r
 }

@@ -12,7 +12,7 @@ import (
 )
 
 func RegisterPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "register.html", gin.H{
+	c.HTML(http.StatusOK, "register", gin.H{
 		"error": "",
 	})
 }
@@ -23,21 +23,21 @@ func Register(c *gin.Context, db *sql.DB) {
 	password := c.PostForm("password")
 
 	if username == "" || email == "" || password == "" {
-		c.HTML(http.StatusBadRequest, "register.html", gin.H{
+		c.HTML(http.StatusBadRequest, "register", gin.H{
 			"error": "Username, email and password are required",
 		})
 		return
 	}
 
 	if len(username) < 3 || len(username) > 50 {
-		c.HTML(http.StatusBadRequest, "register.html", gin.H{
+		c.HTML(http.StatusBadRequest, "register", gin.H{
 			"error": "Username must be between 3 and 50 characters",
 		})
 		return
 	}
 
 	if len(password) < 10 {
-		c.HTML(http.StatusBadRequest, "register.html", gin.H{
+		c.HTML(http.StatusBadRequest, "register", gin.H{
 			"error": "Password must be at least 10 characters",
 		})
 		return
@@ -48,7 +48,7 @@ func Register(c *gin.Context, db *sql.DB) {
 		bcrypt.DefaultCost,
 	)
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "register.html", gin.H{
+		c.HTML(http.StatusInternalServerError, "register", gin.H{
 			"error": "Could not create account",
 		})
 		return
@@ -62,7 +62,7 @@ func Register(c *gin.Context, db *sql.DB) {
 		string(passwordHash),
 	)
 	if err != nil {
-		c.HTML(http.StatusBadRequest, "register.html", gin.H{
+		c.HTML(http.StatusBadRequest, "register", gin.H{
 			"error": "Could not create account",
 		})
 		return

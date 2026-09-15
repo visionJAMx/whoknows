@@ -8,7 +8,8 @@ import (
 
 // LoginPage viser loginformularen.
 func LoginPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "login.html", gin.H{
+	c.HTML(http.StatusOK, "login", gin.H{
+		"title": "login",
 		"error": "",
 	})
 }
