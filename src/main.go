@@ -51,6 +51,7 @@ func main() {
 	// Routes
 	router.GET("/login", delivery.LoginPage)
 
+	router.GET("/", delivery.SearchPage(db))
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
 
