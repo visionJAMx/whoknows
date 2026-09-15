@@ -1,25 +1,5 @@
 {{ define "content" }}
 <main>
-  <h1>Search</h1>
-
-<<<<<<< HEAD
-  {{ if .error }}
-  <p role="alert">{{ .error }}</p>
-  {{ end }}
-
-  <form action="/" method="GET">
-    <label for="q">Search query</label>
-    <input id="q" name="q" type="text" value="{{ .query }}" />
-
-    <button type="submit">Search</button>
-  </form>
-
-  {{ if .query }}
-  <p>You searched for: {{ .query }}</p>
-  {{ end }}
-</main>
-{{ end }}
-=======
         <form action="/" method="GET">
             <label for="q">Search query</label>
             <input id="q" name="q" type="text" value="{{ .query }}">
@@ -53,7 +33,5 @@
         <p>No results found.</p>
         {{ end }}
         {{ end }}
-    </main>
-</body>
-</html>
->>>>>>> dev
+</main>
+{{ end }}
