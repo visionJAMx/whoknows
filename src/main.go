@@ -12,6 +12,12 @@ import (
 )
 
 func main() {
+
+	err := godotenvvault.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	databasePath := os.Getenv("DATABASE_PATH")
 	if databasePath == "" {
 		databasePath = "../data/whoknows.db"
@@ -33,6 +39,8 @@ func main() {
 
 	//Routes
 	router.GET("/login", delivery.LoginPage)
+	router.GET("/register", delivery.RegisterPage)
+	router.GET("/about", delivery.AboutPage)
 
 	router.GET("/", delivery.SearchPage)
 
@@ -45,4 +53,13 @@ func main() {
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
 	}
+}
+
+func createRenderer() multitemplate.Renderer {
+	r := multitemplate.NewRenderer()
+	r.AddFromFiles("login", "templates/layout.html", "templates/login.html")
+	r.AddFromFiles("search", "templates/layout.html", "templates/search.html")
+	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
+	r.AddFromFiles("about", "templates/layout.html", "templates/about.html")
+	return r
 }

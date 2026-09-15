@@ -22,7 +22,7 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 		}
 
 		if q == "" {
-			c.HTML(http.StatusOK, "search.html", data)
+			c.HTML(http.StatusOK, "search", data)
 			return
 		}
 
@@ -35,12 +35,12 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 		if err != nil {
 			log.Printf("search pages: %v", err)
 			data["error"] = "Could not search pages"
-			c.HTML(http.StatusInternalServerError, "search.html", data)
+			c.HTML(http.StatusInternalServerError, "search", data)
 			return
 		}
 
 		data["search_results"] = pages
-		c.HTML(http.StatusOK, "search.html", data)
+		c.HTML(http.StatusOK, "search", data)
 	}
 }
 

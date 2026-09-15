@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Search - WhoKnows</title>
-</head>
-<body>
-    <main>
-        <h1>Search</h1>
-
+{{ define "content" }}
+<main>
         <form action="/" method="GET">
             <label for="q">Search query</label>
             <input id="q" name="q" type="text" value="{{ .query }}">
@@ -41,6 +33,5 @@
         <p>No results found.</p>
         {{ end }}
         {{ end }}
-    </main>
-</body>
-</html>
+</main>
+{{ end }}
