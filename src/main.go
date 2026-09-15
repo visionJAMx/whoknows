@@ -57,6 +57,8 @@ func main() {
 
 	router.GET("/", delivery.SearchPage)
 
+	router.GET("/api/search", delivery.SearchAPI(db))
+
 	router.GET("/health", func(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{
 			"status": "ok",
