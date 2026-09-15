@@ -55,7 +55,8 @@ func main() {
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
 
-	router.GET("/", delivery.SearchPage)
+	//vi har den samme og den router.GET("/", delivery.SearchPage(db))findes længere oppe
+	//router.GET("/", delivery.SearchPage)
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 

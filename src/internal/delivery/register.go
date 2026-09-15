@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/visionJAMx/whoknows/src/repository"
+	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
 func RegisterPage(c *gin.Context) {
