@@ -15,6 +15,7 @@ import (
 )
 
 func main() {
+
 	databasePath := os.Getenv("DATABASE_PATH")
 	if databasePath == "" {
 		databasePath = "../data/whoknows.db"
