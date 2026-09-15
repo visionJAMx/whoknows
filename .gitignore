@@ -20,7 +20,7 @@
 
 # Go workspace file
 go.work
-
+tmp/
 temp/
 
 # Byte-compiled / optimized / DLL files
