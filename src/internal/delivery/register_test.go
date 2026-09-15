@@ -42,6 +42,7 @@ func TestRegisterPageReturnsHTML(t *testing.T) {
 		)
 	}
 }
+
 func TestRegister(t *testing.T) {
     gin.SetMode(gin.TestMode)
 
