@@ -1,20 +1,16 @@
 package delivery
 
 import (
-	"database/sql"
-	"errors"
 	"net/http"
-	"strings"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/visionJAMx/whoknows/src/service"
 )
 
 func LogoutHandler(c *gin.Context) {
-session := sessions.Default(c)
-    session.Clear()
-    session.Save()
+	session := sessions.Default(c)
+	session.Clear()
+	session.Save()
 
 	c.SetCookie("auth_token", "", -1, "/", "localhost", false, true)
 
