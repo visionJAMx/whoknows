@@ -1,0 +1,59 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_DIR: /opt/whoknows
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: src/go.mod
+          cache-dependency-path: src/go.sum
+
+      # Disabled until tests are implemented
+      # - name: Test
+      #   working-directory: src
+      #   run: go test ./...
+
+      - name: Build
+        working-directory: src
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../deploy/whoknows .
+
+      - name: Collect files
+        run: cp -r src/templates src/static deploy/
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -rf $APP_DIR/incoming && mkdir -p $APP_DIR/incoming"
+          scp -r deploy/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:$APP_DIR/incoming/
+
+      - name: Swap files and restart
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+            set -e
+            cd $APP_DIR
+            rm -rf templates static
+            mv incoming/templates incoming/static .
+            mv incoming/whoknows whoknows
+            sudo systemctl restart whoknows
+            sleep 2
+            curl -fsS http://localhost:8080/health
+          "
