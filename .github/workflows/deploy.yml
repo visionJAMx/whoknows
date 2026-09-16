@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, 42-deployment-via-vm] # remove feature branch before merging
 
 concurrency:
   group: deploy
