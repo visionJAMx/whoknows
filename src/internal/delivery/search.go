@@ -49,11 +49,10 @@ func SearchAPI(db *sql.DB) gin.HandlerFunc {
 		q := c.Query("q")
 		language := c.DefaultQuery("language", "en")
 
+		// API-kontrakten bruger "data" som liste af søgeresultater.
 		if q == "" {
 			c.JSON(http.StatusOK, gin.H{
-				"query":          q,
-				"language":       language,
-				"search_results": []any{},
+				"data": []any{},
 			})
 			return
 		}
@@ -72,10 +71,16 @@ func SearchAPI(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
+		// Ingen resultater skal give [] i JSON, ikke null.
+		if len(pages) == 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"data": []any{},
+			})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
-			"query":          q,
-			"language":       language,
-			"search_results": pages,
+			"data": pages,
 		})
 	}
 }
