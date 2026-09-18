@@ -60,6 +60,9 @@ func main() {
 	//Routes
 	router.GET("/login", delivery.LoginPage)
 	router.GET("/register", delivery.RegisterPage)
+	router.POST("/api/register", func(c *gin.Context) {
+		delivery.Register(c, db)
+	})
 	router.GET("/about", delivery.AboutPage)
 	router.GET("/", delivery.SearchPage(db))
 
