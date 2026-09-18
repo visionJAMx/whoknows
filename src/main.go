@@ -60,6 +60,8 @@ func main() {
 	//Routes
 	router.GET("/login", delivery.LoginPage)
 	router.GET("/register", delivery.RegisterPage)
+	registerHandler := delivery.NewRegisterHandler(db)
+	router.POST("/api/register", registerHandler.APIRegister)
 	router.GET("/about", delivery.AboutPage)
 	router.GET("/", delivery.SearchPage(db))
 
