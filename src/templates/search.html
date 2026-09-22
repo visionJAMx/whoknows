@@ -1,0 +1,37 @@
+{{ define "content" }}
+<main>
+        <form action="/" method="GET">
+            <label for="q">Search query</label>
+            <input id="q" name="q" type="text" value="{{ .query }}">
+
+            <label for="language">Language</label>
+            <select id="language" name="language">
+                <option value="en" {{ if eq .language "en" }}selected{{ end }}>English</option>
+                <option value="da" {{ if eq .language "da" }}selected{{ end }}>Dansk</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+
+        {{ if .error }}
+        <p role="alert">{{ .error }}</p>
+        {{ end }}
+
+        {{ if .query }}
+        <h2>Results for: {{ .query }}</h2>
+
+        {{ if .results }}
+        <ul>
+            {{ range .results }}
+            <li>
+                <a href="{{ .URL }}">{{ .Title }}</a>
+                <p>{{ .Content }}</p>
+            </li>
+            {{ end }}
+        </ul>
+        {{ else }}
+        <p>No results found.</p>
+        {{ end }}
+        {{ end }}
+</main>
+{{ end }}

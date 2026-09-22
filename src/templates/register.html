@@ -1,0 +1,56 @@
+{{ define "content" }}
+<main>
+  <h1>Sign Up</h1>
+
+  {{ if .error }}
+  <p role="alert">{{ .error }}</p>
+  {{ end }}
+
+  <form action="/api/register" method="POST">
+    <div>
+      <label for="username">Username</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        autocomplete="username"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="email">E-Mail</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="password2">Password (repeat)</label>
+      <input
+        id="password2"
+        name="password2"
+        type="password"
+        autocomplete="new-password"
+        required
+      />
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</main>
+{{ end }}
