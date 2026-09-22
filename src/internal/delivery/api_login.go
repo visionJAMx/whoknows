@@ -32,11 +32,31 @@ func (handler *LoginHandler) APILogin(context *gin.Context) {
 	username := strings.TrimSpace(context.PostForm("username"))
 	password := context.PostForm("password")
 
-	if username == "" || password == "" {
-		context.JSON(http.StatusUnprocessableEntity, AuthResponse{
-			StatusCode: http.StatusUnprocessableEntity,
-			Message:    "Username and password are required",
+	// Brug samme valideringsformat som registrering og OpenAPI-kontrakten.
+	var details []ValidationErrorDetail
+
+	if username == "" {
+		details = append(details, ValidationErrorDetail{
+			Loc:  []string{"body", "username"},
+			Msg:  "Username is required",
+			Type: "value_error.missing",
 		})
+	}
+
+	if password == "" {
+		details = append(details, ValidationErrorDetail{
+			Loc:  []string{"body", "password"},
+			Msg:  "Password is required",
+			Type: "value_error.missing",
+		})
+	}
+
+	// Returnér alle manglende felter, før vi forsøger at logge ind.
+	if len(details) > 0 {
+		context.JSON(
+			http.StatusUnprocessableEntity,
+			ValidationErrorResponse{Detail: details},
+		)
 		return
 	}
 
