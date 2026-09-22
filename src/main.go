@@ -61,33 +61,22 @@ func main() {
 	// Tilslut sessions før de routes, der bruger dem.
 	router.Use(sessions.Sessions("whoknows_session", store))
 
-	// HTML-sider til browseren.
+	//Routes
 	router.GET("/login", delivery.LoginPage)
 	router.GET("/register", delivery.RegisterPage)
-	router.POST("/api/register", func(c *gin.Context) {
-		delivery.Register(c, db)
-	})
 	router.GET("/about", delivery.AboutPage)
 	router.GET("/", delivery.SearchPage(db))
 
-	// Login: kontroller brugeroplysninger og gem sessionen.
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
 
-	// Registrering: giv handleren adgang til databasen.
-	router.POST("/api/register", func(c *gin.Context) {
-		delivery.Register(c, db)
-	})
+	registerHandler := delivery.NewRegisterHandler(db)
+	router.POST("/api/register", registerHandler.APIRegister)
 
-	// Logout: lad handleren rydde brugerens session.
-	router.GET("/api/logout", delivery.LogoutHandler)
-
-	// Søgning med JSON-svar.
 	router.GET("/api/search", delivery.SearchAPI(db))
 
-	// Kontrollerer, at HTTP-serveren svarer — ikke databasens status.
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
+	router.GET("/health", func(context *gin.Context) {
+		context.JSON(http.StatusOK, gin.H{
 			"status": "ok",
 		})
 	})

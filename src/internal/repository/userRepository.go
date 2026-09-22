@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strings"
 
 	"github.com/visionJAMx/whoknows/src/domain"
 )
@@ -59,4 +60,10 @@ func FindUserByUsername(
 	}
 
 	return user, nil
+}
+
+// IsDuplicateUserError afgør, om en fejl fra CreateUser skyldes et duplikeret
+// username eller email (UNIQUE-constraint i schema.sql).
+func IsDuplicateUserError(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "UNIQUE constraint failed")
 }
