@@ -46,14 +46,23 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 
 func SearchAPI(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// q er påkrævet, men en tom værdi (?q=) er tilladt.
+		_, exists := c.Request.URL.Query()["q"]
+		if !exists {
+			c.JSON(http.StatusUnprocessableEntity, gin.H{
+				"statusCode": http.StatusUnprocessableEntity,
+				"message":    "Missing required query parameter: q",
+			})
+			return
+		}
+
 		q := c.Query("q")
 		language := c.DefaultQuery("language", "en")
 
+		// En tom søgning returnerer en tom liste.
 		if q == "" {
 			c.JSON(http.StatusOK, gin.H{
-				"query":          q,
-				"language":       language,
-				"search_results": []any{},
+				"data": []any{},
 			})
 			return
 		}
@@ -72,10 +81,16 @@ func SearchAPI(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
+		// Ingen resultater skal give [] i JSON, ikke null.
+		if len(pages) == 0 {
+			c.JSON(http.StatusOK, gin.H{
+				"data": []any{},
+			})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
-			"query":          q,
-			"language":       language,
-			"search_results": pages,
+			"data": pages,
 		})
 	}
 }

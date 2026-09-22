@@ -16,9 +16,8 @@ import (
 )
 
 func main() {
-
-	err := godotenvvault.Load()
-	if err != nil {
+	// Indlæs projektets miljøvariabler.
+	if err := godotenvvault.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
@@ -27,21 +26,25 @@ func main() {
 		databasePath = "../data/whoknows.db"
 	}
 
+	// Åbn databaseforbindelsen, og luk den, når main afsluttes normalt.
 	db, err := repository.Open(databasePath)
 	if err != nil {
 		log.Fatalf("could not connect to repository: %v", err)
 	}
 	defer db.Close()
 
+	// Opret tabellerne, hvis de ikke allerede findes.
 	if err := repository.Initialize(context.Background(), db); err != nil {
 		log.Fatalf("could not initialize repository: %v", err)
 	}
 
+	// Sessionsnøglen skal komme fra miljøet — aldrig hardcodes.
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if len(sessionSecret) < 32 {
 		log.Fatal("SESSION_SECRET must contain at least 32 characters")
 	}
 
+	// Sessionen gemmes i en signeret cookie.
 	store := cookie.NewStore([]byte(sessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
@@ -55,18 +58,20 @@ func main() {
 	router.HTMLRender = createRenderer()
 	router.Static("/static", "./static")
 
+	// Tilslut sessions før de routes, der bruger dem.
 	router.Use(sessions.Sessions("whoknows_session", store))
 
 	//Routes
 	router.GET("/login", delivery.LoginPage)
 	router.GET("/register", delivery.RegisterPage)
-	registerHandler := delivery.NewRegisterHandler(db)
-	router.POST("/api/register", registerHandler.APIRegister)
 	router.GET("/about", delivery.AboutPage)
 	router.GET("/", delivery.SearchPage(db))
 
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
+
+	registerHandler := delivery.NewRegisterHandler(db)
+	router.POST("/api/register", registerHandler.APIRegister)
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 
@@ -81,6 +86,7 @@ func main() {
 	}
 }
 
+// Hver side bruger det fælles layout sammen med sin egen template.
 func createRenderer() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("login", "templates/layout.html", "templates/login.html")
