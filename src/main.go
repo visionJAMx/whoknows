@@ -15,6 +15,10 @@ import (
 	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
+// @title WhoKnows
+// @version 0.1.0
+// @description API til WhoKnows-projektet.
+
 func main() {
 	// Indlæs projektets miljøvariabler.
 	if err := godotenvvault.Load(); err != nil {
@@ -77,11 +81,7 @@ func main() {
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 
-	router.GET("/health", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-		})
-	})
+	router.GET("/health", healthHandler)
 
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
@@ -96,4 +96,22 @@ func createRenderer() multitemplate.Renderer {
 	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
 	r.AddFromFiles("about", "templates/layout.html", "templates/about.html")
 	return r
+}
+
+// HealthResponse beskriver applikationens statussvar.
+type HealthResponse struct {
+	Status string `json:"status" binding:"required"`
+}
+
+// healthHandler viser, at webserveren kan besvare en forespørgsel.
+// @Summary Kontrollér at applikationen svarer
+// @Description Kontrollerer HTTP-serveren, ikke databaseforbindelsen.
+// @Tags Health
+// @Produce json
+// @Success 200 {object} HealthResponse
+// @Router /health [get]
+func healthHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, HealthResponse{
+		Status: "ok",
+	})
 }

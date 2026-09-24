@@ -7,7 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// LogoutHandler rydder sessionen og returnerer JSON efter API-kontrakten.
+// LogoutHandler rydder sessionen og returnerer JSON.
+// @Summary Log brugeren ud
+// @Description Rydder den aktuelle brugers session.
+// @Tags Authentication
+// @Produce json
+// @Success 200 {object} AuthResponse
+// @Failure 500 {object} AuthResponse
+// @Router /api/logout [get]
 func LogoutHandler(c *gin.Context) {
 	session := sessions.Default(c)
 
