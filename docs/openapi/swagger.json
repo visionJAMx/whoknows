@@ -4,22 +4,37 @@
             "delivery.AuthResponse": {
                 "properties": {
                     "message": {
-                        "type": "string"
+                        "type": [
+                            "string",
+                            "null"
+                        ]
                     },
                     "statusCode": {
-                        "type": "integer"
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
                     }
                 },
+                "type": "object"
+            },
+            "delivery.HealthResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "status"
+                ],
                 "type": "object"
             },
             "delivery.LoginRequest": {
                 "properties": {
                     "password": {
-                        "form": "password",
                         "type": "string"
                     },
                     "username": {
-                        "form": "username",
                         "type": "string"
                     }
                 },
@@ -55,6 +70,21 @@
                 ],
                 "type": "object"
             },
+            "delivery.RequestValidationError": {
+                "properties": {
+                    "message": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "statusCode": {
+                        "default": 422,
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "delivery.SearchErrorResponse": {
                 "properties": {
                     "error": {
@@ -83,7 +113,10 @@
                 "properties": {
                     "loc": {
                         "items": {
-                            "type": "string"
+                            "type": [
+                                "string",
+                                "integer"
+                            ]
                         },
                         "type": "array",
                         "uniqueItems": false
@@ -113,29 +146,15 @@
                     }
                 },
                 "type": "object"
-            },
-            "main.HealthResponse": {
-                "properties": {
-                    "status": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "status"
-                ],
-                "type": "object"
             }
         }
     },
     "info": {
-        "description": "Kontrollerer HTTP-serveren, ikke databaseforbindelsen.",
+        "description": "API til WhoKnows-projektet.",
         "title": "WhoKnows",
         "version": "0.1.0"
     },
-    "externalDocs": {
-        "description": "",
-        "url": ""
-    },
+    "openapi": "3.1.0",
     "paths": {
         "/": {
             "get": {
@@ -215,8 +234,8 @@
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "$ref": "#/components/schemas/delivery.LoginRequest",
-                                "summary": "credentials",
-                                "description": "Loginoplysninger"
+                                "description": "Loginoplysninger",
+                                "summary": "credentials"
                             }
                         }
                     },
@@ -310,8 +329,8 @@
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "$ref": "#/components/schemas/delivery.RegisterRequest",
-                                "summary": "credentials",
-                                "description": "Registreringsoplysninger"
+                                "description": "Registreringsoplysninger",
+                                "summary": "credentials"
                             }
                         }
                     },
@@ -375,7 +394,10 @@
                         "name": "language",
                         "schema": {
                             "default": "en",
-                            "type": "string"
+                            "type": [
+                                "string",
+                                "null"
+                            ]
                         }
                     }
                 ],
@@ -394,7 +416,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/delivery.AuthResponse"
+                                    "$ref": "#/components/schemas/delivery.RequestValidationError"
                                 }
                             }
                         },
@@ -425,7 +447,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/main.HealthResponse"
+                                    "$ref": "#/components/schemas/delivery.HealthResponse"
                                 }
                             }
                         },
@@ -478,6 +500,5 @@
                 ]
             }
         }
-    },
-    "openapi": "3.1.0"
+    }
 }

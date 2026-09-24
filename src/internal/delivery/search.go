@@ -20,6 +20,12 @@ type SearchErrorResponse struct {
 	Error string `json:"error"`
 }
 
+// RequestValidationError beskriver kontraktens fejl ved manglende søgeparameter.
+type RequestValidationError struct {
+	StatusCode int    `json:"statusCode" default:"422"`
+	Message    string `json:"message"`
+}
+
 // SearchPage viser søgesiden og eventuelle søgeresultater.
 // @Summary Vis søgesiden
 // @Description Viser søgeformularen og eventuelle søgeresultater.
@@ -73,7 +79,7 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 // @Param q query string true "Søgetekst; tom værdi er tilladt"
 // @Param language query string false "Sprogfilter" default(en)
 // @Success 200 {object} SearchResponse
-// @Failure 422 {object} AuthResponse "Query-parameteren q mangler"
+// @Failure 422 {object} RequestValidationError "Query-parameteren q mangler"
 // @Failure 500 {object} SearchErrorResponse
 // @Router /api/search [get]
 func SearchAPI(db *sql.DB) gin.HandlerFunc {

@@ -81,7 +81,7 @@ func main() {
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 
-	router.GET("/health", healthHandler)
+	router.GET("/health", delivery.HealthHandler)
 
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
@@ -96,22 +96,4 @@ func createRenderer() multitemplate.Renderer {
 	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
 	r.AddFromFiles("about", "templates/layout.html", "templates/about.html")
 	return r
-}
-
-// HealthResponse beskriver applikationens statussvar.
-type HealthResponse struct {
-	Status string `json:"status" binding:"required"`
-}
-
-// healthHandler viser, at webserveren kan besvare en forespørgsel.
-// @Summary Kontrollér at applikationen svarer
-// @Description Kontrollerer HTTP-serveren, ikke databaseforbindelsen.
-// @Tags Health
-// @Produce json
-// @Success 200 {object} HealthResponse
-// @Router /health [get]
-func healthHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, HealthResponse{
-		Status: "ok",
-	})
 }
