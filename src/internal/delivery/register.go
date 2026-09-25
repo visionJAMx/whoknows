@@ -11,18 +11,40 @@ import (
 	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
+// RegisterRequest beskriver registreringsformularen i OpenAPI.
+// Handleren læser fortsat felterne med PostForm.
+type RegisterRequest struct {
+	// Brugernavnet trimmes og skal være 3–50 bytes i den nuværende kode.
+	Username string `json:"username" binding:"required"`
+
+	// Email trimmes og skal indeholde @.
+	Email string `json:"email" binding:"required"`
+
+	// Password skal være mindst 10 bytes i den nuværende kode.
+	Password string `json:"password" binding:"required"`
+
+	// Valgfrit; skal matche password, hvis feltet sendes.
+	Password2 string `json:"password2"`
+}
+
 // RegisterPage viser registreringsformularen.
+// @Summary Vis registreringsformularen
+// @Tags Pages
+// @Produce html
+// @Success 200 {string} string "Registreringsformularen som HTML"
+// @Router /register [get]
 func RegisterPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "register", gin.H{
 		"error": "",
 	})
 }
 
-// ValidationErrorDetail følger API-kontraktens format for et enkelt valideringsproblem.
+// ValidationErrorDetail beskriver et valideringsproblem.
+// Alle tre felter er obligatoriske i API-kontrakten.
 type ValidationErrorDetail struct {
-	Loc  []string `json:"loc"`
-	Msg  string   `json:"msg"`
-	Type string   `json:"type"`
+	Loc  []string `json:"loc" binding:"required"`
+	Msg  string   `json:"msg" binding:"required"`
+	Type string   `json:"type" binding:"required"`
 }
 
 // ValidationErrorResponse pakker en eller flere valideringsfejl til et 422-svar efter kontrakten.
@@ -40,8 +62,17 @@ func NewRegisterHandler(db *sql.DB) *RegisterHandler {
 	return &RegisterHandler{db: db}
 }
 
-// APIRegister validerer form-data, opretter brugeren og returnerer JSON efter kontrakten i issue #48.
-// Password hashes altid sikkert, og hverken password eller password-hash indgår nogensinde i svaret.
+// APIRegister validerer formularen og opretter brugeren.
+// Password hashes og returneres aldrig i svaret.
+// @Summary Opret en bruger
+// @Description Opretter en bruger. password2 er valgfrit, men skal matche password, hvis det sendes.
+// @Tags Authentication
+// @Produce json
+// @Param credentials formData RegisterRequest true "Registreringsoplysninger"
+// @Success 200 {object} AuthResponse
+// @Failure 422 {object} ValidationErrorResponse
+// @Failure 500 {object} AuthResponse
+// @Router /api/register [post]
 func (handler *RegisterHandler) APIRegister(c *gin.Context) {
 	username := strings.TrimSpace(c.PostForm("username"))
 	email := strings.TrimSpace(c.PostForm("email"))

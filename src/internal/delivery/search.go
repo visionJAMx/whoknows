@@ -9,6 +9,33 @@ import (
 	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
+// SearchResponse beskriver søgeresultaterne i OpenAPI.
+// Data er en tom liste, når søgningen ikke giver resultater.
+type SearchResponse struct {
+	Data []map[string]any `json:"data" binding:"required"`
+}
+
+// SearchErrorResponse beskriver svaret ved en intern søgefejl.
+type SearchErrorResponse struct {
+	Error string `json:"error"`
+}
+
+// RequestValidationError beskriver kontraktens fejl ved manglende søgeparameter.
+type RequestValidationError struct {
+	StatusCode int    `json:"statusCode" default:"422"`
+	Message    string `json:"message"`
+}
+
+// SearchPage viser søgesiden og eventuelle søgeresultater.
+// @Summary Vis søgesiden
+// @Description Viser søgeformularen og eventuelle søgeresultater.
+// @Tags Pages
+// @Produce html
+// @Param q query string false "Søgetekst"
+// @Param language query string false "Sprogfilter" default(en)
+// @Success 200 {string} string "Søgesiden som HTML"
+// @Failure 500 {string} string "Søgesiden med en fejlbesked"
+// @Router / [get]
 func SearchPage(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		q := c.Query("q")
@@ -44,6 +71,17 @@ func SearchPage(db *sql.DB) gin.HandlerFunc {
 	}
 }
 
+// SearchAPI returnerer søgeresultater som JSON.
+// @Summary Søg efter sider
+// @Description q skal være med i URL'en, men må være tom. Tom søgning eller ingen resultater giver {"data":[]}.
+// @Tags Search
+// @Produce json
+// @Param q query string true "Søgetekst; tom værdi er tilladt"
+// @Param language query string false "Sprogfilter" default(en)
+// @Success 200 {object} SearchResponse
+// @Failure 422 {object} RequestValidationError "Query-parameteren q mangler"
+// @Failure 500 {object} SearchErrorResponse
+// @Router /api/search [get]
 func SearchAPI(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// q er påkrævet, men en tom værdi (?q=) er tilladt.
