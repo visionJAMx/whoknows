@@ -67,7 +67,7 @@ func main() {
 	router.GET("/about", delivery.AboutPage)
 	router.GET("/", delivery.SearchPage(db))
 	// Logout rydder den aktuelle brugers session.
-	router.GET("/api/logout", delivery.LogoutHandler)
+	router.POST("/api/logout", delivery.LogoutHandler)
 
 	loginHandler := delivery.NewLoginHandler(db)
 	router.POST("/api/login", loginHandler.APILogin)
