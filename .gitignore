@@ -182,6 +182,11 @@ cython_debug/
 
 # Local SQLite databases
 *.db
+*.db-wal
+*.db-shm
+*.db-journal
+/backups/
+/restore-check/
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
