@@ -83,6 +83,9 @@ func main() {
 		})
 	})
 
+	router.GET("/weather", delivery.WeatherPage)
+	router.GET("/api/weather", delivery.WeatherAPI)
+
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
 	}
@@ -95,5 +98,6 @@ func createRenderer() multitemplate.Renderer {
 	r.AddFromFiles("search", "templates/layout.html", "templates/search.html")
 	r.AddFromFiles("register", "templates/layout.html", "templates/register.html")
 	r.AddFromFiles("about", "templates/layout.html", "templates/about.html")
+	r.AddFromFiles("weather", "templates/layout.html", "templates/weather.html")
 	return r
 }
