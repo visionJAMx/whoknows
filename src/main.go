@@ -15,6 +15,10 @@ import (
 	"github.com/visionJAMx/whoknows/src/internal/repository"
 )
 
+// @title WhoKnows
+// @version 0.1.0
+// @description API til WhoKnows-projektet.
+
 func main() {
 	// Indlæs projektets miljøvariabler.
 	if err := godotenvvault.Load(); err != nil {
@@ -77,11 +81,7 @@ func main() {
 
 	router.GET("/api/search", delivery.SearchAPI(db))
 
-	router.GET("/health", func(context *gin.Context) {
-		context.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-		})
-	})
+	router.GET("/health", delivery.HealthHandler)
 
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)

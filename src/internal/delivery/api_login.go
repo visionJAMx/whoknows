@@ -11,6 +11,13 @@ import (
 	"github.com/visionJAMx/whoknows/src/service"
 )
 
+// LoginRequest beskriver formularfelterne i OpenAPI.
+// Selve login-handleren læser fortsat felterne med PostForm.
+type LoginRequest struct {
+	Username string `json:"username" form:"username" binding:"required"`
+	Password string `json:"password" form:"password" binding:"required"`
+}
+
 // AuthResponse følger API-kontrakten for login- og registreringssvar.
 type AuthResponse struct {
 	StatusCode int    `json:"statusCode"`
@@ -27,7 +34,17 @@ func NewLoginHandler(db *sql.DB) *LoginHandler {
 	return &LoginHandler{db: db}
 }
 
-// APILogin validerer form-data, autentificerer brugeren og gemmer bruger-ID i sessionen.
+// APILogin validerer loginoplysninger og gemmer bruger-ID i sessionen.
+// @Summary Log brugeren ind
+// @Description Autentificerer brugeren og opretter en sessionscookie.
+// @Tags Authentication
+// @Produce json
+// @Param credentials formData LoginRequest true "Loginoplysninger"
+// @Success 200 {object} AuthResponse
+// @Failure 401 {object} AuthResponse
+// @Failure 422 {object} ValidationErrorResponse
+// @Failure 500 {object} AuthResponse
+// @Router /api/login [post]
 func (handler *LoginHandler) APILogin(context *gin.Context) {
 	username := strings.TrimSpace(context.PostForm("username"))
 	password := context.PostForm("password")
