@@ -2,11 +2,9 @@
 <main>
   <h1>Sign Up</h1>
 
-  {{ if .error }}
-  <p role="alert">{{ .error }}</p>
-  {{ end }}
+  <p role="alert" data-role="form-error"{{ if not .error }} hidden{{ end }}>{{ .error }}</p>
 
-  <form action="/api/register" method="POST">
+  <form id="register-form" action="/api/register" method="POST">
     <div>
       <label for="username">Username</label>
       <input

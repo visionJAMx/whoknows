@@ -1,1 +1,3 @@
 README.md merge=ours
+* text=auto
+*.go text eol=lf
