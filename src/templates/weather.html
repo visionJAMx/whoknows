@@ -1,0 +1,26 @@
+{{ define "content" }}
+
+<main>
+    <h1>Weather forecast</h1>
+
+    {{ if .error }}
+        <p role="alert">{{ .error }}</p>
+    {{ else }}
+
+        <h2>{{ .forecast.Location }}</h2>
+
+        <ul>
+            {{ range .forecast.Days }}
+            <li>
+                <strong>{{ .Date }}</strong>
+                <p>Maximum: {{ .MaxTemp }} °C</p>
+                <p>Minimum: {{ .MinTemp }} °C</p>
+                <p>Weather code: {{ .WeatherCode }}</p>
+            </li>
+            {{ end }}
+        </ul>
+
+    {{ end }}
+</main>
+
+{{ end }}
