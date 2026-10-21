@@ -8,6 +8,7 @@ import (
 		"net/http"
 		"os"
 
+
 		"github.com/dotenv-org/godotenvvault"
 		"github.com/gin-contrib/multitemplate"
 		"github.com/gin-contrib/sessions"
@@ -15,16 +16,19 @@ import (
 		"github.com/gin-gonic/gin"
 	*/
 	"github.com/dotenv-org/godotenvvault"
+	"github.com/visionJAMx/whoknows/src/service"
 	"github.com/visionJAMx/whoknows/src/web"
 	"log"
 )
 
 func main() {
 	if err := godotenvvault.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file: ", err)
 	}
 
-	router := web.Initrouter()
+	authService := service.NewAuthService()
+
+	router := web.Initrouter(authService)
 
 	router.Run(":8080")
 }

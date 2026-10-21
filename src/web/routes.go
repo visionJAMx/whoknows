@@ -2,11 +2,11 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/visionJAMx/whoknows/src/service"
 )
 
-func Initrouter() *gin.Engine{
+func Initrouter(authService *service.AuthService) *gin.Engine {
 	r := gin.Default()
-
 
 	// test.go
 	r.GET("/test", handleTest)
@@ -17,7 +17,7 @@ func Initrouter() *gin.Engine{
 
 	// auth.go
 	r.POST("/api/login", handleApiLogin)
-	r.POST("/api/register", handleApiRegister)
-	
+	r.POST("/api/register", handleApiRegister(authService))
+
 	return r
 }

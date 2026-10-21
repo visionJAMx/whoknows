@@ -1,17 +1,34 @@
 package web
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/visionJAMx/whoknows/src/service"
+)
 
 func handleApiLogin(c *gin.Context) {
 	// call service layer
 	// create session
 
-	c.String(200, "Logged in")
+	c.String(http.StatusOK, "Logged in")
 }
 
-func handleApiRegister(c *gin.Context) {
-	// call service layer
-	// redirect?
+func handleApiRegister(auth *service.AuthService) gin.HandlerFunc {
+	return func(c *gin.Context) {
 
-	c.String(200, "Account created")
+		// call service layer and handle potential error
+		input := service.RegisterInput{
+			Username: "testUser1",
+			Email:    "testUser1@test.com",
+			Password: "123456",
+		}
+
+		if err := auth.Register(c.Request.Context(), input); err != nil {
+			c.String(http.StatusInternalServerError, "Couldn't create account")
+			return
+		}
+
+		c.String(http.StatusCreated, "Account created")
+	}
 }
