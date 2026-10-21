@@ -1,0 +1,4 @@
+/login
+/search
+/weather
+/register
