@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .title }}</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="navigation">
+      <nav>
+        <h1><a id="nav-logo" href="/">¿Who Knows?</a></h1>
+
+      </nav>
+    </div>
+    <div class="body">{{ template "content" . }}</div>
+    <div class="footer">
+      <span>¿Who Knows? &copy; 2009</span>
+      <a href="/about">About</a>
+      <a href="/weather">See Weather</a>
+    </div>
+  </div>
+  <script src="/static/auth.js" defer></script>
+</body>
+</html>
