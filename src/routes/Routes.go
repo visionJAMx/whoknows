@@ -10,15 +10,9 @@ import (
 
 
 func Initrouter() *gin.Engine{
-
 	r := gin.Default()
 
 	r.GET("/api", handlers.Register )
 	
-
 	return r
-
-
-	
-
 }
