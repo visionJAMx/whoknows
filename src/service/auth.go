@@ -16,5 +16,8 @@ func NewAuthService() *AuthService {
 }
 
 func (s *AuthService) Register(ctx context.Context, input RegisterInput) error {
+
+	// TODO: call repository layer
+
 	return nil
 }
