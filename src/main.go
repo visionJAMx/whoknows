@@ -15,12 +15,12 @@ import (
 		"github.com/gin-gonic/gin"
 	*/
 	"github.com/dotenv-org/godotenvvault"
-	"github.com/visionJAMx/whoknows/src/routes"
+	"github.com/visionJAMx/whoknows/src/web"
 	"log"
 )
 
 func main() {
-	router := routes.Initrouter()
+	router := web.Initrouter()
 
 	if err := godotenvvault.Load(); err != nil {
 		log.Fatal("Error loading .env file")
