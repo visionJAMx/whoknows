@@ -20,11 +20,11 @@ import (
 )
 
 func main() {
-	router := web.Initrouter()
-
 	if err := godotenvvault.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	router := web.Initrouter()
 
 	router.Run(":8080")
 }
