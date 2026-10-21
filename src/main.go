@@ -8,7 +8,6 @@ import (
 		"net/http"
 		"os"
 
-
 		"github.com/dotenv-org/godotenvvault"
 		"github.com/gin-contrib/multitemplate"
 		"github.com/gin-contrib/sessions"
@@ -20,20 +19,12 @@ import (
 	"log"
 )
 
-func main(){
+func main() {
+	router := routes.Initrouter()
 
+	if err := godotenvvault.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-router := routes.Initrouter()
-	
-if err := godotenvvault.Load(); err != nil {
-log.Fatal("Error loading .env file")
-}
-
-
-router.Run(":8080");
-
-
-
-
-
+	router.Run(":8080")
 }
