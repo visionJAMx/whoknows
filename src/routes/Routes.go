@@ -1,18 +1,19 @@
 package routes
 
 import (
+	
+
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/visionJAMx/whoknows/src/handlers"
 )
+
 
 
 func Initrouter() *gin.Engine{
 
 	r := gin.Default()
 
-	r.GET("/api", func(ctx *gin.Context) {
-		ctx.String(http.StatusAccepted, ("hej"))
-	})
+	r.GET("/api", handlers.Register )
 	
 
 	return r
