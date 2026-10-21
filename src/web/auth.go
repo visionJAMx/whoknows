@@ -8,3 +8,10 @@ func handleApiLogin(c *gin.Context) {
 
 	c.String(200, "Logged in")
 }
+
+func handleApiRegister(c *gin.Context) {
+	// call service layer
+	// redirect?
+
+	c.String(200, "Account created")
+}

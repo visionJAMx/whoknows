@@ -17,6 +17,7 @@ func Initrouter() *gin.Engine{
 
 	// auth.go
 	r.POST("/api/login", handleApiLogin)
+	r.POST("/api/register", handleApiRegister)
 	
 	return r
 }
