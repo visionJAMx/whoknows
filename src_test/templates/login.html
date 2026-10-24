@@ -1,0 +1,32 @@
+{{ define "content" }}
+<main>
+  <h1>Login</h1>
+
+  <p role="alert" data-role="form-error"{{ if not .error }} hidden{{ end }}>{{ .error }}</p>
+
+  <form id="login-form" action="/api/login" method="POST">
+    <div>
+      <label for="username">Username</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        autocomplete="username"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</main>
+{{ end }}
