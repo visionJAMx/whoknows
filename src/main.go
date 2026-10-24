@@ -27,8 +27,10 @@ func main() {
 	}
 
 	authService := service.NewAuthService()
+	searchService := service.NewSearchService()
+	weatherService := service.NewWeatherService()
 
-	router := web.Initrouter(authService)
+	router := web.InitRouter(authService, searchService, weatherService)
 
 	router.Run(":8080")
 }
