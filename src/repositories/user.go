@@ -5,9 +5,10 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/visionJAMx/whoknows/src/models"
+	"modernc.org/sqlite"
+	sqlite3 "modernc.org/sqlite/lib"
 )
 
 type UserRepository struct {
@@ -29,7 +30,7 @@ func (r *UserRepository) Create(ctx context.Context, user models.User) (int64, e
 	)
 	if err != nil {
 		if isUniqueViolation(err) {
-			return 0, fmt.Errorf("create user: %w", ErrDuplicate)
+			return 0, fmt.Errorf("create user: %w: %w", ErrDuplicate, err)
 		}
 
 		return 0, fmt.Errorf("create user: %w", err)
@@ -69,7 +70,7 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (m
 	return user, nil
 }
 
-// modernc.org/sqlite has no typed constraint error, so match on the message
 func isUniqueViolation(err error) bool {
-	return strings.Contains(err.Error(), "UNIQUE constraint failed")
+	var sqliteErr *sqlite.Error
+	return errors.As(err, &sqliteErr) && sqliteErr.Code() == sqlite3.SQLITE_CONSTRAINT_UNIQUE
 }
