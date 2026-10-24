@@ -1,8 +1,17 @@
 package service
 
-import "context"
+import (
+	"context"
+
+	"github.com/visionJAMx/whoknows/src/models"
+)
+
+type PageRepository interface {
+	Search(ctx context.Context, query, language string) ([]models.Page, error)
+}
 
 type SearchService struct {
+	pages PageRepository
 }
 
 type SearchInput struct {
@@ -10,8 +19,8 @@ type SearchInput struct {
 	Language string
 }
 
-func NewSearchService() *SearchService {
-	return &SearchService{}
+func NewSearchService(pages PageRepository) *SearchService {
+	return &SearchService{pages: pages}
 }
 
 func (s *SearchService) SearchPage(ctx context.Context, input SearchInput) (string, error) {

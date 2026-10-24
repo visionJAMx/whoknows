@@ -1,8 +1,18 @@
 package service
 
-import "context"
+import (
+	"context"
+
+	"github.com/visionJAMx/whoknows/src/models"
+)
+
+type UserRepository interface {
+	Create(ctx context.Context, user models.User) (int64, error)
+	FindByUsername(ctx context.Context, username string) (models.User, error)
+}
 
 type AuthService struct {
+	users UserRepository
 }
 
 type RegisterInput struct {
@@ -16,8 +26,8 @@ type LoginInput struct {
 	Password string
 }
 
-func NewAuthService() *AuthService {
-	return &AuthService{}
+func NewAuthService(users UserRepository) *AuthService {
+	return &AuthService{users: users}
 }
 
 func (s *AuthService) Register(ctx context.Context, input RegisterInput) (string, error) {
