@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ .title }}</title>
   <link rel="stylesheet" type="text/css" href="/static/style.css" />
+
 </head>
 <body>
   <div class="page">
     <div class="navigation">
       <nav>
         <h1><a id="nav-logo" href="/">¿Who Knows?</a></h1>
-
+        {{if .hasSession}}
+        <!-- show logout button -->
+        {{ else }}
+        <!-- show login button  -->
+        {{ end }}
       </nav>
     </div>
     <div class="body">{{ template "content" . }}</div>

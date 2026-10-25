@@ -4,6 +4,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// ErrMismatchedPassword is returned by Compare when the password doesn't match the hash
+var ErrMismatchedPassword = bcrypt.ErrMismatchedHashAndPassword
+
 func HashPassword(password string) (string, error) {
 	result, err := bcrypt.GenerateFromPassword(
 		[]byte(password),

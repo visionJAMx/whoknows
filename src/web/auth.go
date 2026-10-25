@@ -4,9 +4,12 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/visionJAMx/whoknows/src/service"
 )
+
+const sessionUserIDKey = "user_id"
 
 func handleLoginPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -27,15 +30,62 @@ func handleAPILogin(auth *service.AuthService) gin.HandlerFunc {
 			Password: c.PostForm("password"),
 		}
 
-		result, err := auth.Login(c.Request.Context(), input)
-		if err != nil {
-			c.String(http.StatusInternalServerError, "Couldn't log in")
+		userID, err := auth.Login(c.Request.Context(), input)
+
+		// missing fields → 422
+		var validationErr *service.ValidationError
+		if errors.As(err, &validationErr) {
+			var details []ValidationErrorDetail
+			for _, f := range validationErr.Fields {
+				details = append(details, ValidationErrorDetail{
+					Loc:  []string{"body", f.Field},
+					Msg:  f.Message,
+					Type: errorTypes[f.Problem],
+				})
+			}
+
+			c.JSON(http.StatusUnprocessableEntity, ValidationErrorResponse{Detail: details})
 			return
 		}
 
-		// TODO: create session
+		// wrong username or password → 401
+		if errors.Is(err, service.ErrInvalidCredentials) {
+			c.JSON(http.StatusUnauthorized, AuthResponse{
+				StatusCode: http.StatusUnauthorized,
+				Message:    "Invalid username or password",
+			})
+			return
+		}
 
-		c.String(http.StatusOK, result)
+		// anything else → 500
+		if err != nil {
+			_ = c.Error(err)
+			c.JSON(http.StatusInternalServerError, AuthResponse{
+				StatusCode: http.StatusInternalServerError,
+				Message:    "Could not complete login",
+			})
+			return
+		}
+
+		// only the user ID goes in the signed cookie, never the password or hash
+		session := sessions.Default(c)
+		session.Clear()
+		session.Set(sessionUserIDKey, userID)
+
+		if err := session.Save(); err != nil {
+			_ = c.Error(err)
+			c.JSON(http.StatusInternalServerError, AuthResponse{
+				StatusCode: http.StatusInternalServerError,
+				Message:    "Could not save login session",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, AuthResponseWithRedirect{
+			StatusCode:  http.StatusOK,
+			Message:     "You were logged in",
+			RedirectURL: "/",
+		})
 	}
 }
 
@@ -83,16 +133,24 @@ func handleAPIRegister(auth *service.AuthService) gin.HandlerFunc {
 	}
 }
 
-func handleAPILogout(auth *service.AuthService) gin.HandlerFunc {
+func handleAPILogout() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result, err := auth.Logout(c.Request.Context())
-		if err != nil {
-			c.String(http.StatusInternalServerError, "Couldn't log out")
+		session := sessions.Default(c)
+		session.Clear()
+
+		// saving the cleared session updates the browser's cookie
+		if err := session.Save(); err != nil {
+			_ = c.Error(err)
+			c.JSON(http.StatusInternalServerError, AuthResponse{
+				StatusCode: http.StatusInternalServerError,
+				Message:    "Could not complete logout",
+			})
 			return
 		}
 
-		// TODO: clear session
-
-		c.String(http.StatusOK, result)
+		c.JSON(http.StatusOK, AuthResponse{
+			StatusCode: http.StatusOK,
+			Message:    "You were logged out",
+		})
 	}
 }

@@ -25,6 +25,12 @@ type AuthResponse struct {
 	Message    string `json:"message"`
 }
 
+type AuthResponseWithRedirect struct {
+	StatusCode  int    `json:"statusCode"`
+	Message     string `json:"message"`
+	RedirectURL string `json:"redirectURL"`
+}
+
 type ValidationErrorDetail struct {
 	Loc  []string `json:"loc"`
 	Msg  string   `json:"msg"`
