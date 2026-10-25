@@ -16,7 +16,6 @@ func InitRouter(
 	r.GET("/", handleSearchPage(searchService))
 	r.GET("/login", handleLoginPage())
 	r.GET("/register", handleRegisterPage())
-	r.GET("/about", handleAboutPage())
 	r.GET("/weather", handleWeatherPage(weatherService))
 
 	// api
