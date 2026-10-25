@@ -13,9 +13,18 @@
       <nav>
         <h1><a id="nav-logo" href="/">¿Who Knows?</a></h1>
         {{if .hasSession}}
-        <!-- show logout button -->
+        <button id="logout-button" type="button">Log out</button>
+        <script>
+          document.getElementById("logout-button").addEventListener("click", async () => {
+            const response = await fetch("/api/logout");
+
+            if (response.ok) {
+              window.location.href = "/";
+            }
+          });
+        </script>
         {{ else }}
-        <!-- show login button  -->
+        <button id="login-button" type="button"><a href="/login">Log in</a></button>
         {{ end }}
       </nav>
     </div>

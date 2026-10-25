@@ -11,9 +11,18 @@ import (
 
 const sessionUserIDKey = "user_id"
 
+// hasSession reports whether the request belongs to a logged-in user
+func hasSession(c *gin.Context) bool {
+	return sessions.Default(c).Get(sessionUserIDKey) != nil
+}
+
 func handleLoginPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(http.StatusOK, "login", nil)
+		c.HTML(http.StatusOK, "login", gin.H{
+			"title":      "Login",
+			"error":      "",
+			"hasSession": hasSession(c),
+		})
 	}
 }
 

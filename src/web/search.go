@@ -23,11 +23,12 @@ func handleSearchPage(search *service.SearchService) gin.HandlerFunc {
 		pages, err := search.Search(c.Request.Context(), input)
 
 		data := gin.H{
-			"title":    "Search",
-			"query":    input.Query,
-			"language": input.Language,
-			"results":  pages,
-			"error":    "",
+			"title":      "Search",
+			"query":      input.Query,
+			"language":   input.Language,
+			"results":    pages,
+			"error":      "",
+			"hasSession": hasSession(c),
 		}
 
 		if err != nil {
