@@ -10,7 +10,7 @@ import (
 
 func handleLoginPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.String(http.StatusOK, "GET /login")
+		c.HTML(http.StatusOK, "login", nil)
 	}
 }
 
