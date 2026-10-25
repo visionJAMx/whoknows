@@ -1,6 +1,7 @@
 package web
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -40,21 +41,45 @@ func handleAPILogin(auth *service.AuthService) gin.HandlerFunc {
 
 func handleAPIRegister(auth *service.AuthService) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
-		// call service layer and handle potential error
 		input := service.RegisterInput{
-			Username: "testUser1",
-			Email:    "testUser1@test.com",
-			Password: "123456",
+			Username:        c.PostForm("username"),
+			Email:           c.PostForm("email"),
+			Password:        c.PostForm("password"),
+			PasswordConfirm: c.PostForm("password2"),
 		}
 
-		result, err := auth.Register(c.Request.Context(), input)
-		if err != nil {
-			c.String(http.StatusInternalServerError, "Couldn't create account")
+		err := auth.Register(c.Request.Context(), input)
+
+		// invalid input → 422
+		var validationErr *service.ValidationError
+		if errors.As(err, &validationErr) {
+			var details []ValidationErrorDetail
+			for _, f := range validationErr.Fields {
+				details = append(details, ValidationErrorDetail{
+					Loc:  []string{"body", f.Field},
+					Msg:  f.Message,
+					Type: errorTypes[f.Problem],
+				})
+			}
+
+			c.JSON(http.StatusUnprocessableEntity, ValidationErrorResponse{Detail: details})
 			return
 		}
 
-		c.String(http.StatusCreated, result)
+		// anything else → 500
+		if err != nil {
+			_ = c.Error(err)
+			c.JSON(http.StatusInternalServerError, AuthResponse{
+				StatusCode: http.StatusInternalServerError,
+				Message:    "Could not create account",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, AuthResponse{
+			StatusCode: http.StatusOK,
+			Message:    "You were successfully registered",
+		})
 	}
 }
 
