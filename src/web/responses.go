@@ -1,8 +1,24 @@
 package web
 
-import "github.com/visionJAMx/whoknows/src/service"
+import (
+	"github.com/visionJAMx/whoknows/src/models"
+	"github.com/visionJAMx/whoknows/src/service"
+)
 
 // response bodies as defined in docs/openapi/swagger.json
+
+type SearchResponse struct {
+	Data []models.Page `json:"data"`
+}
+
+type SearchErrorResponse struct {
+	Error string `json:"error"`
+}
+
+type RequestValidationError struct {
+	StatusCode int    `json:"statusCode"`
+	Message    string `json:"message"`
+}
 
 type AuthResponse struct {
 	StatusCode int    `json:"statusCode"`

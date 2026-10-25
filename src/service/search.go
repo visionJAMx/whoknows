@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/visionJAMx/whoknows/src/models"
 )
@@ -23,16 +25,17 @@ func NewSearchService(pages PageRepository) *SearchService {
 	return &SearchService{pages: pages}
 }
 
-func (s *SearchService) SearchPage(ctx context.Context, input SearchInput) (string, error) {
+// Search returns the pages matching the query. An empty query returns no pages without searching.
+func (s *SearchService) Search(ctx context.Context, input SearchInput) ([]models.Page, error) {
+	input.Query = strings.TrimSpace(input.Query)
+	if input.Query == "" {
+		return []models.Page{}, nil
+	}
 
-	// TODO: call repository layer
+	pages, err := s.pages.Search(ctx, input.Query, input.Language)
+	if err != nil {
+		return nil, fmt.Errorf("search pages: %w", err)
+	}
 
-	return "GET /", nil
-}
-
-func (s *SearchService) Search(ctx context.Context, input SearchInput) (string, error) {
-
-	// TODO: call repository layer
-
-	return "GET /api/search", nil
+	return pages, nil
 }
