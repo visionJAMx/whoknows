@@ -12,19 +12,22 @@ func InitRouter(
 ) *gin.Engine {
 	r := gin.Default()
 
-	// pages
-	r.GET("/", handleSearchPage(searchService))
+	// auth
 	r.GET("/login", handleLoginPage())
 	r.GET("/register", handleRegisterPage())
-	r.GET("/weather", handleWeatherPage(weatherService))
-
-	// api
 	r.POST("/api/login", handleAPILogin(authService))
 	r.POST("/api/register", handleAPIRegister(authService))
 	r.GET("/api/logout", handleAPILogout(authService))
+
+	// search
+	r.GET("/", handleSearchPage(searchService))
 	r.GET("/api/search", handleAPISearch(searchService))
+
+	// weather
+	r.GET("/weather", handleWeatherPage(weatherService))
 	r.GET("/api/weather", handleAPIWeather(weatherService))
 
+	// health
 	r.GET("/health", handleHealth())
 
 	return r
