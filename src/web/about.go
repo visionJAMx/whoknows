@@ -8,6 +8,9 @@ import (
 
 func handleAboutPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.String(http.StatusOK, "GET /about")
+		c.HTML(http.StatusOK, "about", gin.H{
+			"title": "About",
+			"error": "",
+		})
 	}
 }

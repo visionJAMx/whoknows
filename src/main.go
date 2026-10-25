@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/dotenv-org/godotenvvault"
+	"github.com/visionJAMx/whoknows/src/rendering"
 	"github.com/visionJAMx/whoknows/src/repositories"
 	"github.com/visionJAMx/whoknows/src/service"
 	"github.com/visionJAMx/whoknows/src/web"
@@ -39,6 +40,9 @@ func main() {
 	weatherService := service.NewWeatherService()
 
 	router := web.InitRouter(authService, searchService, weatherService)
+	router.HTMLRender = rendering.CreateRenderer()
+
+	router.Static("/static", "./static")
 
 	if err := router.Run(":8080"); err != nil {
 		log.Fatalf("could not start server: %v", err)
