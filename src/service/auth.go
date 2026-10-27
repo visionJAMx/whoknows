@@ -48,19 +48,19 @@ func NewAuthService(users UserRepository) *AuthService {
 
 // Register validates the input, hashes the password and stores the user.
 // Invalid input, including a taken username or email, is returned as a *ValidationError.
-func (s *AuthService) Register(ctx context.Context, input RegisterInput) error {
+func (s *AuthService) Register(ctx context.Context, input RegisterInput) (int64, error) {
 	input = normalizeRegistration(input)
 
 	if fields := validateRegistration(input); len(fields) > 0 {
-		return &ValidationError{Fields: fields}
+		return 0, &ValidationError{Fields: fields}
 	}
 
 	hash, err := crypto.HashPassword(input.Password)
 	if err != nil {
-		return fmt.Errorf("hash password: %w", err)
+		return 0, fmt.Errorf("hash password: %w", err)
 	}
 
-	_, err = s.users.Create(ctx, models.User{
+	userID, err := s.users.Create(ctx, models.User{
 		Username:     input.Username,
 		Email:        input.Email,
 		PasswordHash: hash,
@@ -68,18 +68,18 @@ func (s *AuthService) Register(ctx context.Context, input RegisterInput) error {
 
 	switch {
 	case errors.Is(err, repositories.ErrUsernameTaken):
-		return &ValidationError{Fields: []FieldError{
+		return 0, &ValidationError{Fields: []FieldError{
 			{Field: "username", Problem: ProblemTaken, Message: "Username is already taken"},
 		}}
 	case errors.Is(err, repositories.ErrEmailTaken):
-		return &ValidationError{Fields: []FieldError{
+		return 0, &ValidationError{Fields: []FieldError{
 			{Field: "email", Problem: ProblemTaken, Message: "Email is already taken"},
 		}}
 	case err != nil:
-		return fmt.Errorf("create user: %w", err)
+		return 0, fmt.Errorf("create user: %w", err)
 	}
 
-	return nil
+	return userID, nil
 }
 
 // Login checks the credentials and returns the user's ID.

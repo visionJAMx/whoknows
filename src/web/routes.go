@@ -18,8 +18,8 @@ func InitRouter(
 	r.Use(sessions.Sessions("whoknows_session", sessionStore))
 
 	// auth
-	r.GET("/login", handleLoginPage())       // TODO
-	r.GET("/register", handleRegisterPage()) // TODO
+	r.GET("/login", handleLoginPage())
+	r.GET("/register", handleRegisterPage())
 	r.POST("/api/login", handleAPILogin(authService))
 	r.POST("/api/register", handleAPIRegister(authService))
 	r.GET("/api/logout", handleAPILogout())

@@ -28,7 +28,11 @@ func handleLoginPage() gin.HandlerFunc {
 
 func handleRegisterPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.String(http.StatusOK, "GET /register")
+		c.HTML(http.StatusOK, "register", gin.H{
+			"title":      "Register",
+			"error":      "",
+			"hasSession": hasSession(c),
+		})
 	}
 }
 
@@ -107,7 +111,7 @@ func handleAPIRegister(auth *service.AuthService) gin.HandlerFunc {
 			PasswordConfirm: c.PostForm("password2"),
 		}
 
-		err := auth.Register(c.Request.Context(), input)
+		userID, err := auth.Register(c.Request.Context(), input)
 
 		// invalid input → 422
 		var validationErr *service.ValidationError
@@ -131,6 +135,21 @@ func handleAPIRegister(auth *service.AuthService) gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, AuthResponse{
 				StatusCode: http.StatusInternalServerError,
 				Message:    "Could not create account",
+			})
+			return
+		}
+
+		// create 
+
+		session := sessions.Default(c)
+		session.Clear()
+		session.Set(sessionUserIDKey, userID)
+
+		if err := session.Save(); err != nil {
+			_ = c.Error(err)
+			c.JSON(http.StatusInternalServerError, AuthResponse{
+				StatusCode: http.StatusInternalServerError,
+				Message:    "Could not automically create session after registering",
 			})
 			return
 		}
