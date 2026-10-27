@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/visionJAMx/whoknows/src/external"
 	"github.com/visionJAMx/whoknows/src/rendering"
 	"github.com/visionJAMx/whoknows/src/repositories"
 	"github.com/visionJAMx/whoknows/src/service"
@@ -53,9 +54,14 @@ func main() {
 	userRepository := repositories.NewUserRepository(db)
 	pageRepository := repositories.NewPageRepository(db)
 
+	weatherClient, err := external.NewWeatherClient()
+	if err != nil {
+		log.Fatalf("could not create weather client: %v", err)
+	}
+
 	authService := service.NewAuthService(userRepository)
 	searchService := service.NewSearchService(pageRepository)
-	weatherService := service.NewWeatherService()
+	weatherService := service.NewWeatherService(weatherClient)
 
 	router := web.InitRouter(sessionStore, authService, searchService, weatherService)
 	router.HTMLRender = rendering.CreateRenderer()

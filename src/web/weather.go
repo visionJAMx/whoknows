@@ -9,24 +9,31 @@ import (
 
 func handleWeatherPage(weather *service.WeatherService) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result, err := weather.WeatherPage(c.Request.Context())
+		forecast, err := weather.Forecast(c.Request.Context())
 		if err != nil {
-			c.String(http.StatusBadGateway, "Couldn't fetch weather forecast")
+			c.HTML(http.StatusBadGateway, "weather", gin.H{
+				"title": "Weather",
+				"error": "Could not fetch weather forecast",
+			})
 			return
 		}
 
-		c.String(http.StatusOK, result)
+		c.HTML(http.StatusOK, "weather", gin.H{
+			"title":    "Weather",
+			"forecast": forecast,
+			"error":    "",
+		})
 	}
 }
 
 func handleAPIWeather(weather *service.WeatherService) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result, err := weather.Forecast(c.Request.Context())
+		forecast, err := weather.Forecast(c.Request.Context())
 		if err != nil {
-			c.String(http.StatusBadGateway, "Couldn't fetch weather forecast")
+			c.JSON(http.StatusBadGateway, WeatherErrorResponse{Error: "Could not fetch weather"})
 			return
 		}
 
-		c.String(http.StatusOK, result)
+		c.JSON(http.StatusOK, WeatherResponse{Data: *forecast})
 	}
 }

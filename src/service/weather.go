@@ -1,24 +1,23 @@
 package service
 
-import "context"
+import (
+	"context"
+
+	"github.com/visionJAMx/whoknows/src/external"
+)
+
+type WeatherClient interface {
+	Forecast(ctx context.Context) (*external.Forecast, error)
+}
 
 type WeatherService struct {
+	client WeatherClient
 }
 
-func NewWeatherService() *WeatherService {
-	return &WeatherService{}
+func NewWeatherService(client WeatherClient) *WeatherService {
+	return &WeatherService{client: client}
 }
 
-func (s *WeatherService) WeatherPage(ctx context.Context) (string, error) {
-
-	// TODO: call weather client
-
-	return "GET /weather", nil
-}
-
-func (s *WeatherService) Forecast(ctx context.Context) (string, error) {
-
-	// TODO: call weather client
-
-	return "GET /api/weather", nil
+func (s *WeatherService) Forecast(ctx context.Context) (*external.Forecast, error) {
+	return s.client.Forecast(ctx)
 }

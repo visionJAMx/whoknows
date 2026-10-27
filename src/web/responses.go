@@ -1,6 +1,7 @@
 package web
 
 import (
+	"github.com/visionJAMx/whoknows/src/external"
 	"github.com/visionJAMx/whoknows/src/models"
 	"github.com/visionJAMx/whoknows/src/service"
 )
@@ -39,6 +40,14 @@ type ValidationErrorDetail struct {
 
 type ValidationErrorResponse struct {
 	Detail []ValidationErrorDetail `json:"detail"`
+}
+
+type WeatherResponse struct {
+	Data external.Forecast `json:"data"`
+}
+
+type WeatherErrorResponse struct {
+	Error string `json:"error"`
 }
 
 // errorTypes maps service problems to the contract's error type strings
