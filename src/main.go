@@ -24,7 +24,7 @@ func main() {
 
 	databasePath := os.Getenv("DATABASE_PATH")
 	if databasePath == "" {
-		databasePath = "../data/whoknows.db"
+		log.Fatal("No database path environment variable set")
 	}
 
 	db, err := repositories.Open(databasePath)
