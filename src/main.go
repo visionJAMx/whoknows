@@ -19,7 +19,7 @@ import (
 
 func main() {
 	if err := godotenvvault.Load(); err != nil {
-		log.Fatal("Error loading .env file: ", err)
+		log.Println("Warning: could not load .env file: ", err)
 	}
 
 	databasePath := os.Getenv("DATABASE_PATH")
