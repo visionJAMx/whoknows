@@ -1,7 +1,14 @@
 services:
   whoknows_app:
-    build:
-      context: ./src
-      dockerfile: Dockerfile
+    image: ghcr.io/visionjamx/whoknows:latest
     expose:
       - "8080"
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET}
+      - DATABASE_PATH=/data/whoknows.db
+      - GIN_MODE=${GIN_MODE}
+    volumes:
+      - whoknows_data:/data
+
+volumes:
+  whoknows_data:
