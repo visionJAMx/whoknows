@@ -1,0 +1,344 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="817pt" height="618pt" viewBox="0.00 0.00 817.00 618.00">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 614)">
+<title>LegacyWhoKnows</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-614 813.08,-614 813.08,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>cluster_web</title>
+<polygon fill="none" stroke="black" points="86.54,-8 86.54,-463 326.45,-463 326.45,-8 86.54,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="206.49" y="-446.4" font-family="Times,serif" font-size="14.00">Flask Web Layer</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_database</title>
+<polygon fill="none" stroke="black" points="188.61,-471 188.61,-602 689.34,-602 689.34,-471 188.61,-471"/>
+<text xml:space="preserve" text-anchor="middle" x="438.97" y="-585.4" font-family="Times,serif" font-size="14.00">Database</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_frontend</title>
+<polygon fill="none" stroke="black" points="347.01,-170 347.01,-409 801.08,-409 801.08,-170 347.01,-170"/>
+<text xml:space="preserve" text-anchor="middle" x="574.04" y="-392.4" font-family="Times,serif" font-size="14.00">Templates / Frontend</text>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_security</title>
+<polygon fill="none" stroke="black" points="346.45,-20 346.45,-151 674.86,-151 674.86,-20 346.45,-20"/>
+<text xml:space="preserve" text-anchor="middle" x="510.66" y="-134.4" font-family="Times,serif" font-size="14.00">Authentication / Security</text>
+</g>
+<!-- Flask -->
+<g id="node1" class="node">
+<title>Flask</title>
+<ellipse fill="none" stroke="black" cx="126.5" cy="-223" rx="31.96" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="126.5" y="-218.8" font-family="Times,serif" font-size="14.00">Flask</text>
+</g>
+<!-- SearchPage -->
+<g id="node2" class="node">
+<title>SearchPage</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-358" rx="56.08" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-353.8" font-family="Times,serif" font-size="14.00">SearchPage</text>
+</g>
+<!-- Flask&#45;&gt;SearchPage -->
+<g id="edge2" class="edge">
+<title>Flask-&gt;SearchPage</title>
+<path fill="none" stroke="black" d="M133.32,-240.73C141.91,-264.33 160.1,-306 188.61,-331 192.97,-334.82 197.94,-338.14 203.15,-341.02"/>
+<polygon fill="black" stroke="black" points="201.51,-344.12 212.03,-345.36 204.59,-337.83 201.51,-344.12"/>
+</g>
+<!-- AboutPage -->
+<g id="node3" class="node">
+<title>AboutPage</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-304" rx="53.95" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-299.8" font-family="Times,serif" font-size="14.00">AboutPage</text>
+</g>
+<!-- Flask&#45;&gt;AboutPage -->
+<g id="edge3" class="edge">
+<title>Flask-&gt;AboutPage</title>
+<path fill="none" stroke="black" d="M142.4,-238.81C154.1,-250.53 171.27,-266.28 188.61,-277 194.48,-280.63 200.92,-283.95 207.41,-286.92"/>
+<polygon fill="black" stroke="black" points="205.63,-289.96 216.2,-290.7 208.4,-283.53 205.63,-289.96"/>
+</g>
+<!-- LoginPage -->
+<g id="node4" class="node">
+<title>LoginPage</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-142" rx="52.88" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-137.8" font-family="Times,serif" font-size="14.00">LoginPage</text>
+</g>
+<!-- Flask&#45;&gt;LoginPage -->
+<g id="edge4" class="edge">
+<title>Flask-&gt;LoginPage</title>
+<path fill="none" stroke="black" d="M142.4,-207.19C154.1,-195.47 171.27,-179.72 188.61,-169 194.55,-165.33 201.07,-161.97 207.64,-158.97"/>
+<polygon fill="black" stroke="black" points="208.74,-162.31 216.54,-155.15 205.98,-155.88 208.74,-162.31"/>
+</g>
+<!-- RegisterPage -->
+<g id="node5" class="node">
+<title>RegisterPage</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-250" rx="61.99" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-245.8" font-family="Times,serif" font-size="14.00">RegisterPage</text>
+</g>
+<!-- Flask&#45;&gt;RegisterPage -->
+<g id="edge5" class="edge">
+<title>Flask-&gt;RegisterPage</title>
+<path fill="none" stroke="black" d="M156.86,-229.19C168.1,-231.57 181.38,-234.37 194.49,-237.14"/>
+<polygon fill="black" stroke="black" points="193.43,-240.49 203.94,-239.13 194.87,-233.64 193.43,-240.49"/>
+</g>
+<!-- SearchAPI -->
+<g id="node6" class="node">
+<title>SearchAPI</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-412" rx="52.87" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-407.8" font-family="Times,serif" font-size="14.00">SearchAPI</text>
+</g>
+<!-- Flask&#45;&gt;SearchAPI -->
+<g id="edge6" class="edge">
+<title>Flask-&gt;SearchAPI</title>
+<path fill="none" stroke="black" d="M129.6,-241.34C134.29,-274.33 148.59,-344.04 188.61,-385 192.87,-389.36 197.94,-393.05 203.34,-396.15"/>
+<polygon fill="black" stroke="black" points="201.47,-399.12 211.98,-400.45 204.59,-392.86 201.47,-399.12"/>
+</g>
+<!-- LoginAPI -->
+<g id="node7" class="node">
+<title>LoginAPI</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-88" rx="49.66" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-83.8" font-family="Times,serif" font-size="14.00">LoginAPI</text>
+</g>
+<!-- Flask&#45;&gt;LoginAPI -->
+<g id="edge7" class="edge">
+<title>Flask-&gt;LoginAPI</title>
+<path fill="none" stroke="black" d="M133.32,-205.27C141.91,-181.67 160.1,-140 188.61,-115 193.8,-110.45 199.85,-106.61 206.15,-103.38"/>
+<polygon fill="black" stroke="black" points="207.16,-106.77 214.81,-99.43 204.26,-100.4 207.16,-106.77"/>
+</g>
+<!-- RegisterAPI -->
+<g id="node8" class="node">
+<title>RegisterAPI</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-196" rx="58.78" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-191.8" font-family="Times,serif" font-size="14.00">RegisterAPI</text>
+</g>
+<!-- Flask&#45;&gt;RegisterAPI -->
+<g id="edge8" class="edge">
+<title>Flask-&gt;RegisterAPI</title>
+<path fill="none" stroke="black" d="M156.86,-216.81C168.62,-214.32 182.61,-211.37 196.31,-208.48"/>
+<polygon fill="black" stroke="black" points="196.64,-211.99 205.7,-206.5 195.19,-205.14 196.64,-211.99"/>
+</g>
+<!-- LogoutAPI -->
+<g id="node9" class="node">
+<title>LogoutAPI</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-34" rx="54.49" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-29.8" font-family="Times,serif" font-size="14.00">LogoutAPI</text>
+</g>
+<!-- Flask&#45;&gt;LogoutAPI -->
+<g id="edge9" class="edge">
+<title>Flask-&gt;LogoutAPI</title>
+<path fill="none" stroke="black" d="M129.6,-204.66C134.29,-171.67 148.59,-101.96 188.61,-61 192.71,-56.8 197.56,-53.23 202.74,-50.21"/>
+<polygon fill="black" stroke="black" points="204.29,-53.34 211.64,-45.71 201.14,-47.09 204.29,-53.34"/>
+</g>
+<!-- SQLite -->
+<g id="node10" class="node">
+<title>SQLite</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-497" rx="38.93" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-492.8" font-family="Times,serif" font-size="14.00">SQLite</text>
+</g>
+<!-- SearchPage&#45;&gt;SQLite -->
+<g id="edge10" class="edge">
+<title>SearchPage-&gt;SQLite</title>
+<path fill="none" stroke="black" d="M299.3,-369.92C308.79,-373.79 318.43,-378.76 326.45,-385 338.51,-394.4 336.45,-401.43 346.45,-413 365.34,-434.88 389.11,-457.49 407.06,-473.73"/>
+<polygon fill="black" stroke="black" points="404.45,-476.09 414.23,-480.15 409.12,-470.88 404.45,-476.09"/>
+</g>
+<!-- SearchTemplate -->
+<g id="node14" class="node">
+<title>SearchTemplate</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-358" rx="73.77" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-353.8" font-family="Times,serif" font-size="14.00">SearchTemplate</text>
+</g>
+<!-- SearchPage&#45;&gt;SearchTemplate -->
+<g id="edge22" class="edge">
+<title>SearchPage-&gt;SearchTemplate</title>
+<path fill="none" stroke="black" d="M312.74,-358C324.33,-358 336.81,-358 349.19,-358"/>
+<polygon fill="black" stroke="black" points="348.99,-361.5 358.99,-358 348.99,-354.5 348.99,-361.5"/>
+</g>
+<!-- AboutTemplate -->
+<g id="node15" class="node">
+<title>AboutTemplate</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-304" rx="71.64" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-299.8" font-family="Times,serif" font-size="14.00">AboutTemplate</text>
+</g>
+<!-- AboutPage&#45;&gt;AboutTemplate -->
+<g id="edge23" class="edge">
+<title>AboutPage-&gt;AboutTemplate</title>
+<path fill="none" stroke="black" d="M310.81,-304C323.55,-304 337.45,-304 351.17,-304"/>
+<polygon fill="black" stroke="black" points="351.1,-307.5 361.1,-304 351.1,-300.5 351.1,-307.5"/>
+</g>
+<!-- LoginTemplate -->
+<g id="node16" class="node">
+<title>LoginTemplate</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-196" rx="70.57" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-191.8" font-family="Times,serif" font-size="14.00">LoginTemplate</text>
+</g>
+<!-- LoginPage&#45;&gt;LoginTemplate -->
+<g id="edge24" class="edge">
+<title>LoginPage-&gt;LoginTemplate</title>
+<path fill="none" stroke="black" d="M296.57,-153.98C320.26,-161.24 350.88,-170.63 377.17,-178.68"/>
+<polygon fill="black" stroke="black" points="376.11,-182.02 386.7,-181.6 378.16,-175.32 376.11,-182.02"/>
+</g>
+<!-- RegisterTemplate -->
+<g id="node17" class="node">
+<title>RegisterTemplate</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-250" rx="79.68" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-245.8" font-family="Times,serif" font-size="14.00">RegisterTemplate</text>
+</g>
+<!-- RegisterPage&#45;&gt;RegisterTemplate -->
+<g id="edge25" class="edge">
+<title>RegisterPage-&gt;RegisterTemplate</title>
+<path fill="none" stroke="black" d="M318.6,-250C326.6,-250 334.92,-250 343.27,-250"/>
+<polygon fill="black" stroke="black" points="343.14,-253.5 353.14,-250 343.14,-246.5 343.14,-253.5"/>
+</g>
+<!-- SearchAPI&#45;&gt;SQLite -->
+<g id="edge11" class="edge">
+<title>SearchAPI-&gt;SQLite</title>
+<path fill="none" stroke="black" d="M288.15,-426.81C318.28,-441.34 364.26,-463.51 396.46,-479.04"/>
+<polygon fill="black" stroke="black" points="394.91,-482.18 405.44,-483.38 397.95,-475.88 394.91,-482.18"/>
+</g>
+<!-- LoginAPI&#45;&gt;SQLite -->
+<g id="edge12" class="edge">
+<title>LoginAPI-&gt;SQLite</title>
+<path fill="none" stroke="black" d="M300.75,-96.53C310.67,-100.52 320.14,-106.39 326.45,-115 365.68,-168.54 318.44,-352.83 346.45,-413 358.42,-438.72 382.01,-460.66 401.64,-475.66"/>
+<polygon fill="black" stroke="black" points="399.54,-478.46 409.67,-481.56 403.68,-472.82 399.54,-478.46"/>
+</g>
+<!-- Session -->
+<g id="node20" class="node">
+<title>Session</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-46" rx="40.55" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-41.8" font-family="Times,serif" font-size="14.00">Session</text>
+</g>
+<!-- LoginAPI&#45;&gt;Session -->
+<g id="edge17" class="edge">
+<title>LoginAPI-&gt;Session</title>
+<path fill="none" stroke="black" d="M298.78,-78.15C325.33,-71.82 359.88,-63.59 387.37,-57.04"/>
+<polygon fill="black" stroke="black" points="387.9,-60.51 396.81,-54.79 386.27,-53.7 387.9,-60.51"/>
+</g>
+<!-- PasswordHashing -->
+<g id="node21" class="node">
+<title>PasswordHashing</title>
+<ellipse fill="none" stroke="black" cx="434.69" cy="-100" rx="80.24" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="434.69" y="-95.8" font-family="Times,serif" font-size="14.00">PasswordHashing</text>
+</g>
+<!-- LoginAPI&#45;&gt;PasswordHashing -->
+<g id="edge14" class="edge">
+<title>LoginAPI-&gt;PasswordHashing</title>
+<path fill="none" stroke="black" d="M305.61,-91.28C318.24,-92.14 332.25,-93.09 346.24,-94.05"/>
+<polygon fill="black" stroke="black" points="345.71,-97.52 355.92,-94.7 346.18,-90.53 345.71,-97.52"/>
+</g>
+<!-- RegisterAPI&#45;&gt;SQLite -->
+<g id="edge13" class="edge">
+<title>RegisterAPI-&gt;SQLite</title>
+<path fill="none" stroke="black" d="M304.8,-206.54C313.14,-210.43 320.91,-215.74 326.45,-223 377.92,-290.53 309.16,-336.71 346.45,-413 358.9,-438.49 382.46,-460.44 401.96,-475.51"/>
+<polygon fill="black" stroke="black" points="399.82,-478.27 409.93,-481.43 403.99,-472.66 399.82,-478.27"/>
+</g>
+<!-- RegisterAPI&#45;&gt;PasswordHashing -->
+<g id="edge15" class="edge">
+<title>RegisterAPI-&gt;PasswordHashing</title>
+<path fill="none" stroke="black" d="M296.37,-182.33C306.35,-178.4 316.94,-173.86 326.45,-169 352.32,-155.78 379.84,-137.99 400.53,-123.78"/>
+<polygon fill="black" stroke="black" points="402.35,-126.77 408.57,-118.19 398.36,-121.02 402.35,-126.77"/>
+</g>
+<!-- LogoutAPI&#45;&gt;Session -->
+<g id="edge18" class="edge">
+<title>LogoutAPI-&gt;Session</title>
+<path fill="none" stroke="black" d="M310.33,-37.6C333.3,-39.16 360.09,-40.99 382.82,-42.54"/>
+<polygon fill="black" stroke="black" points="382.58,-46.03 392.79,-43.22 383.05,-39.04 382.58,-46.03"/>
+</g>
+<!-- PagesTable -->
+<g id="node11" class="node">
+<title>PagesTable</title>
+<ellipse fill="none" stroke="black" cx="625.79" cy="-497" rx="55.55" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="625.79" y="-492.8" font-family="Times,serif" font-size="14.00">PagesTable</text>
+</g>
+<!-- SQLite&#45;&gt;PagesTable -->
+<g id="edge19" class="edge">
+<title>SQLite-&gt;PagesTable</title>
+<path fill="none" stroke="black" d="M473.96,-497C498.24,-497 530.31,-497 558.63,-497"/>
+<polygon fill="black" stroke="black" points="558.58,-500.5 568.58,-497 558.58,-493.5 558.58,-500.5"/>
+</g>
+<!-- UsersTable -->
+<g id="node12" class="node">
+<title>UsersTable</title>
+<ellipse fill="none" stroke="black" cx="625.79" cy="-551" rx="55.01" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="625.79" y="-546.8" font-family="Times,serif" font-size="14.00">UsersTable</text>
+</g>
+<!-- SQLite&#45;&gt;UsersTable -->
+<g id="edge20" class="edge">
+<title>SQLite-&gt;UsersTable</title>
+<path fill="none" stroke="black" d="M468.63,-506.41C497.24,-514.58 539.2,-526.56 572.41,-536.04"/>
+<polygon fill="black" stroke="black" points="571.28,-539.36 581.86,-538.74 573.2,-532.63 571.28,-539.36"/>
+</g>
+<!-- SchemaSQL -->
+<g id="node13" class="node">
+<title>SchemaSQL</title>
+<ellipse fill="none" stroke="black" cx="256.46" cy="-497" rx="59.85" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="256.46" y="-492.8" font-family="Times,serif" font-size="14.00">SchemaSQL</text>
+</g>
+<!-- SchemaSQL&#45;&gt;SQLite -->
+<g id="edge21" class="edge">
+<title>SchemaSQL-&gt;SQLite</title>
+<path fill="none" stroke="black" d="M316.63,-497C338.57,-497 363.2,-497 384.18,-497"/>
+<polygon fill="black" stroke="black" points="383.91,-500.5 393.91,-497 383.91,-493.5 383.91,-500.5"/>
+</g>
+<!-- LayoutTemplate -->
+<g id="node18" class="node">
+<title>LayoutTemplate</title>
+<ellipse fill="none" stroke="black" cx="625.79" cy="-277" rx="74.85" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="625.79" y="-272.8" font-family="Times,serif" font-size="14.00">LayoutTemplate</text>
+</g>
+<!-- SearchTemplate&#45;&gt;LayoutTemplate -->
+<g id="edge26" class="edge">
+<title>SearchTemplate-&gt;LayoutTemplate</title>
+<path fill="none" stroke="black" d="M480.91,-343.71C492.13,-339.86 504.06,-335.5 514.93,-331 538.01,-321.44 563.05,-309.28 583.38,-298.92"/>
+<polygon fill="black" stroke="black" points="584.92,-302.07 592.21,-294.38 581.71,-295.84 584.92,-302.07"/>
+</g>
+<!-- AboutTemplate&#45;&gt;LayoutTemplate -->
+<g id="edge27" class="edge">
+<title>AboutTemplate-&gt;LayoutTemplate</title>
+<path fill="none" stroke="black" d="M497.87,-295.12C514.38,-292.76 532.39,-290.19 549.52,-287.75"/>
+<polygon fill="black" stroke="black" points="549.72,-291.25 559.13,-286.38 548.73,-284.32 549.72,-291.25"/>
+</g>
+<!-- LoginTemplate&#45;&gt;LayoutTemplate -->
+<g id="edge28" class="edge">
+<title>LoginTemplate-&gt;LayoutTemplate</title>
+<path fill="none" stroke="black" d="M480.49,-210.14C491.83,-214.03 503.92,-218.44 514.93,-223 538.01,-232.56 563.05,-244.72 583.38,-255.08"/>
+<polygon fill="black" stroke="black" points="581.71,-258.16 592.21,-259.62 584.92,-251.93 581.71,-258.16"/>
+</g>
+<!-- RegisterTemplate&#45;&gt;LayoutTemplate -->
+<g id="edge29" class="edge">
+<title>RegisterTemplate-&gt;LayoutTemplate</title>
+<path fill="none" stroke="black" d="M502.89,-259.6C518.01,-261.75 534.15,-264.06 549.58,-266.26"/>
+<polygon fill="black" stroke="black" points="548.76,-269.68 559.16,-267.63 549.75,-262.75 548.76,-269.68"/>
+</g>
+<!-- CSS -->
+<g id="node19" class="node">
+<title>CSS</title>
+<ellipse fill="none" stroke="black" cx="764.86" cy="-277" rx="28.22" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="764.86" y="-272.8" font-family="Times,serif" font-size="14.00">CSS</text>
+</g>
+<!-- LayoutTemplate&#45;&gt;CSS -->
+<g id="edge30" class="edge">
+<title>LayoutTemplate-&gt;CSS</title>
+<path fill="none" stroke="black" d="M700.94,-277C709.22,-277 717.39,-277 724.96,-277"/>
+<polygon fill="black" stroke="black" points="724.78,-280.5 734.78,-277 724.78,-273.5 724.78,-280.5"/>
+</g>
+<!-- Hashlib -->
+<g id="node22" class="node">
+<title>Hashlib</title>
+<ellipse fill="none" stroke="black" cx="625.79" cy="-100" rx="41.08" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="625.79" y="-95.8" font-family="Times,serif" font-size="14.00">Hashlib</text>
+</g>
+<!-- PasswordHashing&#45;&gt;Hashlib -->
+<g id="edge16" class="edge">
+<title>PasswordHashing-&gt;Hashlib</title>
+<path fill="none" stroke="black" d="M515.34,-100C534.88,-100 555.29,-100 573.12,-100"/>
+<polygon fill="black" stroke="black" points="572.91,-103.5 582.91,-100 572.91,-96.5 572.91,-103.5"/>
+</g>
+<!-- User -->
+<g id="node23" class="node">
+<title>User</title>
+<ellipse fill="none" stroke="black" cx="29.27" cy="-223" rx="29.27" ry="18"/>
+<text xml:space="preserve" text-anchor="middle" x="29.27" y="-218.8" font-family="Times,serif" font-size="14.00">User</text>
+</g>
+<!-- User&#45;&gt;Flask -->
+<g id="edge1" class="edge">
+<title>User-&gt;Flask</title>
+<path fill="none" stroke="black" d="M58.84,-223C66.44,-223 74.81,-223 82.98,-223"/>
+<polygon fill="black" stroke="black" points="82.78,-226.5 92.78,-223 82.78,-219.5 82.78,-226.5"/>
+</g>
+</g>
+</svg>
