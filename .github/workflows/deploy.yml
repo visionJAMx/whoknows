@@ -1,8 +1,7 @@
 name: Deploy
 
 on:
-  Trigger:
-    workflow_dispatch
+  workflow_dispatch:
   push:
     branches: [main, refactor-docker]
 
