@@ -1,9 +1,10 @@
 name: Deploy
 
 on:
+  Trigger:
+    workflow_dispatch
   push:
     branches: [main, refactor-docker]
-  workflow_dispatch
 
 concurrency:
   group: deploy
