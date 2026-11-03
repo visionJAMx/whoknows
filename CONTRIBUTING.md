@@ -1,0 +1,2 @@
+## Linting
+Before submitting a pull-request, please ensure that your branch passes a linting and formatting check. This project uses the ``golangci-lint`` version pinned in the ``lint.yml`` workflow file, to lint and format. Install the appropriate version locally and run ``golangci-lint run`` in the ``src`` directory. Only create a pull-request once this command runs with 0 issues. If you have reasonable grounds to dismiss one of these issues, please make clear notice of this in your pull-request.
