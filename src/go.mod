@@ -4,10 +4,10 @@ go 1.27.1
 
 require (
 	github.com/dotenv-org/godotenvvault v0.6.0
-	github.com/gin-contrib/multitemplate v1.1.3
-	github.com/gin-contrib/sessions v1.1.1
+	github.com/gin-contrib/multitemplate v1.1.4
+	github.com/gin-contrib/sessions v1.1.2
 	github.com/gin-gonic/gin v1.12.0
-	golang.org/x/crypto v0.55.0
+	golang.org/x/crypto v0.56.0
 	modernc.org/sqlite v1.58.0
 )
 
