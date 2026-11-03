@@ -4,8 +4,12 @@ on:
   pull_request:
     branches: [dev, prod]
 
+permissions:
+  contents: read
+
 jobs:
   lint:
+    name: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +21,8 @@ jobs:
         with:
           go-version-file: src/go.mod
 
-      - name: Check formatting
-        working-directory: src
-        run: test -z "$(gofmt -l .)"
-
-      - name: Run go vet
-        working-directory: src
-        run: go vet ./...
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
+        with:
+          version: v2.13
+          working-directory: src
