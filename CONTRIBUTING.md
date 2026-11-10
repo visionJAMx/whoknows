@@ -17,3 +17,10 @@ You can also manually run the analysis on staged files using:
 ```bash
 prek run
 ```
+
+...or run linter on all files:
+```bash
+prek run --all-files
+```
+
+**IMPORTANT**: These commands might not work in powershell on windows, try using git bash instead
