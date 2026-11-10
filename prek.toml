@@ -6,5 +6,5 @@
 repo =  "https://github.com/golangci/golangci-lint"
 rev = "v2.14.0"
 hooks = [
-  { id = "golangci-lint", args = ["--issues-exit-code=1"], entry = "bash -c 'cd src && golangci-lint run --issues-exit-code=1 ./...'", pass_filenames = false }
+  { id = "golangci-lint", entry = "bash -c 'cd src && golangci-lint run --issues-exit-code=1 ./...'", pass_filenames = false }
 ]
