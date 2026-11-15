@@ -1,0 +1,10 @@
+version: "2"
+
+linters:
+  exclusions:
+    presets:
+      - std-error-handling
+
+formatters:
+  enable:
+    - gofmt

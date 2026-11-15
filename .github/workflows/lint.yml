@@ -2,10 +2,14 @@ name: Lint
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [dev, prod]
+
+permissions:
+  contents: read
 
 jobs:
   lint:
+    name: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +21,5 @@ jobs:
         with:
           go-version-file: src/go.mod
 
-      - name: Check formatting
-        working-directory: src
-        run: test -z "$(gofmt -l .)"
-
-      - name: Run go vet
-        working-directory: src
-        run: go vet ./...
+      - name: prek linting
+        uses: j178/prek-action@1382ad72dea72f9d53832f2bcb65b3e87a947204 # v3.1.0

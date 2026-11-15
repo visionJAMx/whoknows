@@ -1,3 +1,4 @@
 README.md merge=ours
-* text=auto
-*.go text eol=lf
+
+#Normalize all text files to LF instead of CRLF
+* text=auto eol=lf

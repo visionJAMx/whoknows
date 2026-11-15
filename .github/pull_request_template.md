@@ -6,7 +6,7 @@ Closes #ISSUE_NUMBER
 
 ## Formål
 
-Beskriv kort, hvorfor denne ændring er nødvendig.
+<!-- Beskriv kort, hvorfor denne ændring er nødvendig. -->
 
 ## Ændringer
 
@@ -15,22 +15,14 @@ Beskriv kort, hvorfor denne ændring er nødvendig.
 
 ## Test
 
-Beskriv, hvordan ændringen er testet.
+<!-- [optional] Beskriv, hvordan ændringen er testet. -->
 
-<!-- Eksempel: go test ./... -->
+## Obs
 
-## Screenshots
-
-Tilføj screenshots, hvis ændringen påvirker brugergrænsefladen. Ellers skriv: Ikke relevant.
-
-## Tjekliste
-
-- [ ] Denne PR løser én afgrænset opgave.
-- [ ] Min branch er baseret på den nyeste version af `main`.
-- [ ] Jeg har gennemgået mine egne ændringer.
-- [ ] Koden er testet lokalt.
-- [ ] Alle relevante tests består.
-- [ ] Nye funktioner har relevante tests.
-- [ ] README eller OpenAPI er opdateret, hvis det er nødvendigt.
-- [ ] Ingen passwords, tokens, `.env`-filer eller databaser er committed.
-- [ ] PR'en er klar til review.
+- Denne PR relaterer sig ikke til et specifikt issue
+- Denne branch er ikke up-to-date med `dev`
+- Jeg har ikke gennemgået mine egne ændringer
+- Koden er ikke testet lokalt
+- Tests består ikke
+- Nye funktioner har ikke relevante tests
+- README eller OpenAPI specification er ikke opdateret med relevante ændringer

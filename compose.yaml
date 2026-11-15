@@ -1,0 +1,20 @@
+services:
+  whoknows_app:
+    image: ghcr.io/visionjamx/whoknows:latest
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET}
+      - DATABASE_PATH=/data/whoknows.db
+      - GIN_MODE=${GIN_MODE}
+    volumes:
+      - whoknows_data:/data
+
+volumes:
+  whoknows_data:
