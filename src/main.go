@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"log"
 	"net/http"
 	"os"
@@ -22,12 +23,14 @@ func main() {
 		log.Println("Warning: could not load .env file:", err)
 	}
 
-	databasePath := os.Getenv("DATABASE_PATH")
-	if databasePath == "" {
-		log.Fatal("No DATABASE_PATH environment variable set")
+	connectionString := os.Getenv("DATABASE_URL")  
+	// PostgreSQL: "postgres://user:password@postgres:5432/dbname?sslmode=disable"
+	db, err := sql.Open("postgres", connectionString)
+	if err != nil {
+		log.Fatalf("could not open SQL database: %v", err)
 	}
 
-	db, err := repositories.Open(databasePath)
+	db, err = repositories.Open(connectionString)
 	if err != nil {
 		log.Fatalf("could not open database: %v", err)
 	}
