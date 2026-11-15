@@ -20,6 +20,7 @@ reviews:
     - path: "src/**/*.go"
       instructions: |
         focus on error-handling, minimization of technical-debt, security and idiomatic Go.
+        Make sure that additions respect the web/service/repositories layering in /docs/architecture.md
 
     - path: "src/repositories/**"
       instructions: |
