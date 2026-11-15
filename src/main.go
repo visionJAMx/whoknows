@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"log"
 	"net/http"
@@ -30,9 +29,6 @@ func main() {
 	}
 	defer db.Close()
 
-	if err := repositories.Initialize(context.Background(), db); err != nil {
-		log.Fatalf("could not initialize database: %v", err)
-	}
 
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if len(sessionSecret) < 32 {
