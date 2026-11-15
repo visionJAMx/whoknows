@@ -23,14 +23,8 @@ func main() {
 		log.Println("Warning: could not load .env file:", err)
 	}
 
-	connectionString := os.Getenv("DATABASE_URL")  
-	// PostgreSQL: "postgres://user:password@postgres:5432/dbname?sslmode=disable"
+	connectionString := os.Getenv("DATABASE_URL")
 	db, err := sql.Open("postgres", connectionString)
-	if err != nil {
-		log.Fatalf("could not open SQL database: %v", err)
-	}
-
-	db, err = repositories.Open(connectionString)
 	if err != nil {
 		log.Fatalf("could not open database: %v", err)
 	}
