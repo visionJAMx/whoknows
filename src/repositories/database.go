@@ -3,56 +3,36 @@ package repositories
 import (
 	"context"
 	"database/sql"
-	_ "embed"
 	"fmt"
-	"os"
-	"path/filepath"
-	"strings"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/lib/pq"
 )
 
-//go:embed schema.sql
-var schema string
-
-// Open connects to the SQLite database at path, creating its directory if needed.
-func Open(path string) (*sql.DB, error) {
-	if strings.TrimSpace(path) == "" {
-		return nil, fmt.Errorf("database path must not be empty")
+// Open connects to PostgreSQL using a connection string
+func Open(connectionString string) (*sql.DB, error) {
+	if connectionString == "" {
+		return nil, fmt.Errorf("database connection string must not be empty")
 	}
 
-	if path != ":memory:" && !strings.HasPrefix(path, "file:") {
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, fmt.Errorf("create database directory: %w", err)
-		}
-	}
-
-	db, err := sql.Open("sqlite", path)
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
 		return nil, fmt.Errorf("open database: %w", err)
 	}
-
-	// SQLite allows only one writer at a time
-	db.SetMaxOpenConns(1)
 
 	if err := db.Ping(); err != nil {
 		db.Close()
 		return nil, fmt.Errorf("connect to database: %w", err)
 	}
 
-	if _, err := db.Exec("PRAGMA foreign_keys = ON"); err != nil {
-		db.Close()
-		return nil, fmt.Errorf("enable foreign keys: %w", err)
-	}
+	// PostgreSQL connection settings
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(2)
 
 	return db, nil
 }
 
-// Initialize creates the tables from schema.sql if they don't exist.
+// Initialize is a no-op since Alembic handles schema
 func Initialize(ctx context.Context, db *sql.DB) error {
-	if _, err := db.ExecContext(ctx, schema); err != nil {
-		return fmt.Errorf("initialize database schema: %w", err)
-	}
-
+	// Schema is managed by Alembic migrations
 	return nil
 }
