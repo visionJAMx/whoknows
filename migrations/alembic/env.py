@@ -1,14 +1,28 @@
 from logging.config import fileConfig
+from pathlib import Path
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+from dotenv import load_dotenv
+import os
 
-from alembic import context
-from whoknows.migrations.models import Base
+from models import Base  # Import your models here
+
+# Load .env from project root (3 levels up)
+load_dotenv(Path(__file__).parent.parent.parent / '.env')
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+from alembic import context
 config = context.config
+
+# Override connection string with env vars
+config.set_main_option(
+    'sqlalchemy.url',
+    f"postgresql+psycopg2://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@localhost:5432/{os.environ['POSTGRES_DB']}"
+)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
