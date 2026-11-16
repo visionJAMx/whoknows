@@ -5,8 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/dotenv-org/godotenvvault"
+	_ "github.com/lib/pq"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
@@ -18,9 +17,6 @@ import (
 )
 
 func main() {
-	if err := godotenvvault.Load(); err != nil {
-		log.Println("Warning: could not load .env file:", err)
-	}
 
 	connectionString := os.Getenv("DATABASE_URL")
 	db, err := sql.Open("postgres", connectionString)
