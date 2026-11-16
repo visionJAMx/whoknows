@@ -22,13 +22,6 @@ func main() {
 		log.Println("Warning: could not load .env file:", err)
 	}
 
-	connectionString := os.Getenv("DATABASE_URL")
-	db, err := sql.Open("postgres", connectionString)
-	if err != nil {
-		log.Fatalf("could not open database: %v", err)
-	}
-	defer db.Close()
-
 
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if len(sessionSecret) < 32 {
