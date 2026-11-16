@@ -24,12 +24,10 @@ func (r *PageRepository) Search(ctx context.Context, query, language string) ([]
 		ctx,
 		`SELECT title, url, language, last_updated, content
 		 FROM pages
-		 WHERE (? = '' OR language = ?)
-		   AND (title LIKE  ? OR content LIKE ?)
+		 WHERE ($1 = '' OR language = $1)
+		   AND (title LIKE $2 OR content LIKE $2)
 		 ORDER BY title`,
 		language,
-		language,
-		searchTerm,
 		searchTerm,
 	)
 	if err != nil {
