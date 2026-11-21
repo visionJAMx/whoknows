@@ -8,7 +8,8 @@ import os
 
 from models import Base  # Import your models here
 
-# Load .env from project root (3 levels up)
+# Load .env from the project root (canonical location, shared with compose
+# and the Go app)
 load_dotenv(Path(__file__).parent.parent.parent / '.env')
 
 
@@ -17,10 +18,16 @@ load_dotenv(Path(__file__).parent.parent.parent / '.env')
 from alembic import context
 config = context.config
 
-# Override connection string with env vars
+# Override connection string with env vars.
+# DB_HOST/DB_PORT default to localhost so local runs keep working; the cloud
+# migrations container sets DB_HOST to the Coolify Postgres hostname.
+db_host = os.environ.get('DB_HOST', 'localhost')
+db_port = os.environ.get('DB_PORT', '5432')
+
+
 config.set_main_option(
     'sqlalchemy.url',
-    f"postgresql+psycopg2://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@localhost:5432/{os.environ['POSTGRES_DB']}"
+    f"postgresql+psycopg2://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@{db_host}:{db_port}/{os.environ['POSTGRES_DB']}"
 )
 
 
