@@ -25,6 +25,9 @@ db_host = os.environ.get('DB_HOST', 'localhost')
 db_port = os.environ.get('DB_PORT', '5432')
 
 
+# Print the connection string for debugging purposes
+print(f"[env] connecting via {db_host}:{db_port}/{os.environ.get('POSTGRES_DB', '?')} as {os.environ.get('POSTGRES_USER', '?')}", flush=True)
+
 config.set_main_option(
     'sqlalchemy.url',
     f"postgresql+psycopg2://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@{db_host}:{db_port}/{os.environ['POSTGRES_DB']}"
