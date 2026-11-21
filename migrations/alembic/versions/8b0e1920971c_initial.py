@@ -49,3 +49,4 @@ def downgrade() -> None:
     op.drop_table('users')
     op.drop_table('pages')
     # ### end Alembic commands ###
+
