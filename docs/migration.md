@@ -2,6 +2,8 @@
 
 > Temporary doc: delete after the cutover is done and verified. Rehearsed 2026-11-22 (staging, all green).
 
+> **Set `GIN_MODE=release`** on the whoknows resource env before the merge. Session cookies are only marked `Secure` in release mode (`gin.Mode() == gin.ReleaseMode`, `src/main.go`); unset, the app runs in debug mode behind the proxy — it works, but logs verbosely and cookies lack the Secure flag.
+
 **Values** — volume `postgres-data-lfrp5wut8aksukr6dlki5mjp` (never delete) · expected counts **4070 / 49** · migrations `DB_HOST` `lfrp5wut8aksukr6dlki5mjp` (dead after merge — re-point) · SQLite backups on VM: `~/whoknows-sqlite-backup-*.db`, `~/seed_*.sql`.
 
 **Preconditions — all verified**: schema head `d489fff393dd` · `external: true` volume mechanism proven in cloud · staging retired, volume intact · `migration` pushed.
