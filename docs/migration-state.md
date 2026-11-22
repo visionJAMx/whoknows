@@ -21,6 +21,7 @@ flowchart LR
 
 ```bash
 cp .env.example .env                          # repo root, fill in
+pip install -r migrations/alembic/requirements.txt   # python deps for alembic (needs Python 3)
 docker volume create whoknows_postgres_data   # once — the volume is external
 docker compose up -d postgres                 # Postgres 17 on 127.0.0.1:5432
 cd migrations/alembic && alembic upgrade head  # first run only
