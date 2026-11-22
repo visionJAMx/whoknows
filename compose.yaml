@@ -1,12 +1,12 @@
 services:
   postgres:
-    image: postgres:15
+    image: postgres:17
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB:-whoknows}
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,19 +22,11 @@ services:
         condition: service_healthy
     expose:
       - "8080"
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
-      interval: 60s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
     environment:
       - SESSION_SECRET=${SESSION_SECRET}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-whoknows}?sslmode=disable
       - GIN_MODE=${GIN_MODE}
-    volumes:
-      - whoknows_data:/data
 
 volumes:
-  whoknows_data:
   postgres_data:
+    name: ${POSTGRES_VOLUME_NAME:-whoknows_postgres_data}
