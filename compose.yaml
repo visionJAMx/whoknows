@@ -29,4 +29,5 @@ services:
 
 volumes:
   postgres_data:
+    external: true
     name: ${POSTGRES_VOLUME_NAME:-whoknows_postgres_data}
