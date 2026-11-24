@@ -12,7 +12,7 @@ flowchart LR
 
 **Key points**
 
-- **Schema** — Alembic chain head `d489fff393dd`; mirrors the old SQLite schema column-for-column (no `users.created_at`, `pages.language` defaults to `'en'`).
+- **Schema** — Alembic chain head `d489fff393dd`; mirrors the old SQLite schema column-for-column
 - **Data** — one external volume, named via env `POSTGRES_VOLUME_NAME` (cloud) / `whoknows_postgres_data` (local). `external: true` keeps the declared name and survives `down -v` / resource cleanup. Exactly one postgres ever mounts it.
   - *Version lock: the data volume only opens under the PG major that wrote it (`postgres:17` is load-bearing); a major upgrade needs a planned `pg_upgrade`, never an image bump.*
 - **App** — lib/pq, `DATABASE_URL` + `SESSION_SECRET` (≥32 chars) from env (root `.env` locally). API payloads are form-encoded.
