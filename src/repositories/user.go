@@ -7,9 +7,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/lib/pq"
 	"github.com/visionJAMx/whoknows/src/models"
-	"modernc.org/sqlite"
-	sqlite3 "modernc.org/sqlite/lib"
 )
 
 type UserRepository struct {
@@ -21,25 +20,21 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 }
 
 func (r *UserRepository) Create(ctx context.Context, user models.User) (int64, error) {
-	result, err := r.db.ExecContext(
+	var id int64
+	err := r.db.QueryRowContext(
 		ctx,
 		`INSERT INTO users (username, email, password_hash)
-		 VALUES (?, ?, ?)`,
+		 VALUES ($1, $2, $3) RETURNING id`,
 		user.Username,
 		user.Email,
 		user.PasswordHash,
-	)
+	).Scan(&id)
 	if err != nil {
 		if dupErr := duplicateUserError(err); dupErr != nil {
 			return 0, fmt.Errorf("create user: %w: %w", dupErr, err)
 		}
 
 		return 0, fmt.Errorf("create user: %w", err)
-	}
-
-	id, err := result.LastInsertId()
-	if err != nil {
-		return 0, fmt.Errorf("get created user ID: %w", err)
 	}
 
 	return id, nil
@@ -52,7 +47,7 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (m
 		ctx,
 		`SELECT id, username, email, password_hash
 		 FROM users
-		 WHERE username = ?`,
+		 WHERE username = $1`,
 		username,
 	).Scan(
 		&user.ID,
@@ -73,18 +68,15 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (m
 
 // duplicateUserError returns ErrUsernameTaken or ErrEmailTaken if err is a UNIQUE violation, otherwise nil.
 func duplicateUserError(err error) error {
-	var sqliteErr *sqlite.Error
-	if !errors.As(err, &sqliteErr) || sqliteErr.Code() != sqlite3.SQLITE_CONSTRAINT_UNIQUE {
-		return nil
+	var pqErr *pq.Error
+	if errors.As(err, &pqErr) {
+		if strings.Contains(pqErr.Message, "users_username_key") || strings.Contains(pqErr.Message, "username") {
+			return ErrUsernameTaken
+		}
+		if strings.Contains(pqErr.Message, "users_email_key") || strings.Contains(pqErr.Message, "email") {
+			return ErrEmailTaken
+		}
 	}
 
-	// the driver only exposes the failing column through the message
-	switch msg := sqliteErr.Error(); {
-	case strings.Contains(msg, "users.username"):
-		return ErrUsernameTaken
-	case strings.Contains(msg, "users.email"):
-		return ErrEmailTaken
-	default:
-		return ErrDuplicate
-	}
+	return nil
 }
