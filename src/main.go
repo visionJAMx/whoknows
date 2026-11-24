@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"log"
 	"net/http"
 	"os"
@@ -10,6 +10,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 	"github.com/visionJAMx/whoknows/src/external"
 	"github.com/visionJAMx/whoknows/src/rendering"
 	"github.com/visionJAMx/whoknows/src/repositories"
@@ -18,24 +19,21 @@ import (
 )
 
 func main() {
+
+	// Load environment from ".env" in the working directory, or fall back to
+	// the project root (the canonical location, also used by compose/alembic).
 	if err := godotenvvault.Load(); err != nil {
-		log.Println("Warning: could not load .env file:", err)
+		if rootErr := godotenvvault.Load("../.env"); rootErr != nil {
+			log.Println("Warning: could not load .env file:", rootErr)
+		}
 	}
 
-	databasePath := os.Getenv("DATABASE_PATH")
-	if databasePath == "" {
-		log.Fatal("No DATABASE_PATH environment variable set")
-	}
-
-	db, err := repositories.Open(databasePath)
+	connectionString := os.Getenv("DATABASE_URL")
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
 		log.Fatalf("could not open database: %v", err)
 	}
 	defer db.Close()
-
-	if err := repositories.Initialize(context.Background(), db); err != nil {
-		log.Fatalf("could not initialize database: %v", err)
-	}
 
 	sessionSecret := os.Getenv("SESSION_SECRET")
 	if len(sessionSecret) < 32 {

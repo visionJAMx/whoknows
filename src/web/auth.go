@@ -139,8 +139,7 @@ func handleAPIRegister(auth *service.AuthService) gin.HandlerFunc {
 			return
 		}
 
-		// create 
-
+		// create session and send cookie with response
 		session := sessions.Default(c)
 		session.Clear()
 		session.Set(sessionUserIDKey, userID)

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 
-language: "da-DK"
-tone_instructions: "Giv konstruktiv, præcis og lærerig feedback. Prioritér fejl, sikkerhed og vedligeholdelse."
+language: "en-US"
+tone_instructions: "Give brief and precise feedback, focusing on anti-patterns and potential bugs"
 
 reviews:
   profile: "chill"
@@ -19,17 +19,16 @@ reviews:
   path_instructions:
     - path: "src/**/*.go"
       instructions: |
-        Kontrollér Go-fejlhåndtering, context-brug, ressourceoprydning,
-        sikkerhed, tests og idiomatisk Go.
+        focus on error-handling, minimization of technical-debt, security and idiomatic Go.
+        Make sure that additions respect the web/service/repositories layering in /docs/architecture.md
 
-    - path: "src/internal/database/**"
+    - path: "src/repositories/**"
       instructions: |
-        Kontrollér at SQL er parameteriseret, at passwords aldrig gemmes
-        som klartekst, og at databasefejl håndteres sikkert.
+        Focus on security and perfomance
 
     - path: ".github/**"
       instructions: |
-        Kontrollér at GitHub-workflows og templates er sikre og korrekte.
+        Focus on security, perfomance and caching
 
 chat:
   auto_reply: true
