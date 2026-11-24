@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 
@@ -29,10 +28,4 @@ func Open(connectionString string) (*sql.DB, error) {
 	db.SetMaxIdleConns(2)
 
 	return db, nil
-}
-
-// Initialize is a no-op since Alembic handles schema
-func Initialize(ctx context.Context, db *sql.DB) error {
-	// Schema is managed by Alembic migrations
-	return nil
 }
