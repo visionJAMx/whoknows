@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dotenv-org/godotenvvault"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/dotenv-org/godotenvvault"
 	_ "github.com/lib/pq"
 	"github.com/visionJAMx/whoknows/src/external"
 	"github.com/visionJAMx/whoknows/src/rendering"
