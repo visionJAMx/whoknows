@@ -29,8 +29,8 @@ func InitRouter(
 	r.GET("/api/search", handleAPISearch(searchService))
 
 	// weather
-	r.GET("/weather", handleWeatherPage(weatherService))    // TODO
-	r.GET("/api/weather", handleAPIWeather(weatherService)) // TODO
+	r.GET("/weather", handleWeatherPage(weatherService))
+	r.GET("/api/weather", handleAPIWeather(weatherService))
 
 	// health
 	r.GET("/health", handleHealth())
