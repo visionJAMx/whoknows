@@ -31,5 +31,8 @@ jobs:
           tags: ghcr.io/visionjamx/whoknows-migrations:latest
 
       - name: Trigger Coolify migration run
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_MIGRATIONS_WEBHOOK: ${{ secrets.COOLIFY_MIGRATIONS_WEBHOOK }}
         run: |
-          curl --fail -X POST -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" "${{ secrets.COOLIFY_MIGRATIONS_WEBHOOK }}"
+          curl --fail -X POST -H "Authorization: Bearer $COOLIFY_TOKEN" "$COOLIFY_MIGRATIONS_WEBHOOK"
