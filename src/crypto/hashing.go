@@ -20,7 +20,7 @@ func HashPassword(password string) (string, error) {
 	return string(result), nil
 }
 
-func Compare(password string, hash string) error {
+func Compare(password, hash string) error {
 	err := bcrypt.CompareHashAndPassword(
 		[]byte(hash),
 		[]byte(password),
